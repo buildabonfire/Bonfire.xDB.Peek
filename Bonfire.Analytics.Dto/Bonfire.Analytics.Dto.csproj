@@ -132,6 +132,9 @@
       <HintPath>..\packages\Sitecore.NVelocity.8.1.151003\lib\NET45\Sitecore.NVelocity.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sitecore.Update, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sitecore.Update.NoReferences.8.1.151003\lib\NET45\Sitecore.Update.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Xdb.Configuration, Version=8.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sitecore.Xdb.Configuration.8.1.151003\lib\NET45\Sitecore.Xdb.Configuration.dll</HintPath>
       <Private>True</Private>

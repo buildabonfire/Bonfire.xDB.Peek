@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bonfire.Analytics.Dto", "Bonfire.Analytics.Dto\Bonfire.Analytics.Dto.csproj", "{6F8177E1-66F9-4EA9-85E7-73687A6B467C}"
+EndProject
+Project("{CAA73BB0-EF22-4D79-A57E-DF67B3BA9C80}") = "Bonfire.Analytics.Dto.Master", "Bonfire.Analytics.Dto.Master\Bonfire.Analytics.Dto.Master.scproj", "{AEFB7F03-6712-4B78-BA0A-1A9AF9418CA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,12 @@ Global
 		{6F8177E1-66F9-4EA9-85E7-73687A6B467C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F8177E1-66F9-4EA9-85E7-73687A6B467C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F8177E1-66F9-4EA9-85E7-73687A6B467C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEFB7F03-6712-4B78-BA0A-1A9AF9418CA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEFB7F03-6712-4B78-BA0A-1A9AF9418CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEFB7F03-6712-4B78-BA0A-1A9AF9418CA2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{AEFB7F03-6712-4B78-BA0A-1A9AF9418CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEFB7F03-6712-4B78-BA0A-1A9AF9418CA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEFB7F03-6712-4B78-BA0A-1A9AF9418CA2}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

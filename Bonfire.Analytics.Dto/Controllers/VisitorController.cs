@@ -20,7 +20,7 @@ namespace Bonfire.Analytics.Dto.Controllers
         {
             Session.Abandon();
 
-            return Json("Done");
+            return Json("Done", JsonRequestBehavior.AllowGet);
         }
     }
 }

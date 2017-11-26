@@ -19,5 +19,5 @@ Clears the user's session is Sitecore. This has the same effect as timing the us
 An example of the output https://gist.github.com/dnstommy/734691e550b2578c4335a292b5ff15ca
 
 ## Deploy
-Build the project in VS 2015. Copy the App_Config folder to your site. Copy the Bonfire.Analytics.Dto.dll to your bin.
+Pull the version from releases that matches your version. Install as an update package. 
 

@@ -1,5 +1,5 @@
 # Bonfire.Analytics.Dto
-This code is currently written for Sitecore 8.1.151003. I will post updates for 8.0 and 8.2.
+This code is currently written for Sitecore 9.0 Initial Release. There is a tag for version 8.2 update 4.
 
 ## Use
 The analytics DTO exposes the current user's profile data in a JSON format.

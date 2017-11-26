@@ -1,16 +1,21 @@
-﻿using System.Web.Mvc;
-using Bonfire.Analytics.Dto.Dto;
-using Sitecore.Mvc.Controllers;
-
-namespace Bonfire.Analytics.Dto.Controllers
+﻿namespace Bonfire.Analytics.Dto.Controllers
 {
-    public class TestController : Controller
+    using System.Web.Mvc;
+    using Repositories;
+
+    public class VisitorController : Controller
     {
+        private readonly IContactRepository _contactRepository;
+
+        public VisitorController(IContactRepository contactRepository)
+        {
+            _contactRepository = contactRepository;
+        }
+
         [HttpGet]
         public JsonResult VisitorDetailsJson()
         {
-            var vi = new VisitorInformation();
-            var trackerDto = vi.GetTrackerDto();
+            var trackerDto = _contactRepository.GetTrackerDto();
 
             return Json(trackerDto, JsonRequestBehavior.AllowGet);
         }

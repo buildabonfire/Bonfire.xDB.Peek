@@ -1,26 +1,27 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using Sitecore.Mvc.Pipelines.Loader;
 using Sitecore.Pipelines;
 
 namespace Bonfire.Analytics.Dto.Pipelines.Initialize
 {
-    public class RegisterCustomRoute : Sitecore.Mvc.Pipelines.Loader.InitializeRoutes
+    public class RegisterCustomRoute : InitializeRoutes
     {
-        private const string BASE_ROUTE = "apis";
-        private const string API_VERSION = "/v1";
+        private const string BaseRoute = "apis";
+        private const string ApiVersion = "/v1";
 
         public override void Process(PipelineArgs args)
         {
             RouteTable.Routes.MapRoute(
                 "VisitorData",
-                BASE_ROUTE + API_VERSION + "/VisitorDetails",
-                new { controller = "Test", action = "VisitorDetailsJson" },
+                BaseRoute + ApiVersion + "/VisitorDetails",
+                new { controller = "Visitor", action = "VisitorDetailsJson" },
                 new[] { "Bonfire.Analytics.Dto.Controllers" });
 
             RouteTable.Routes.MapRoute(
                 "ClearVisitorSession",
-                BASE_ROUTE + API_VERSION + "/ClearVisitorSession",
-                new { controller = "Test", action = "ClearVisitorSession" },
+                BaseRoute + ApiVersion + "/ClearVisitorSession",
+                new { controller = "Visitor", action = "ClearVisitorSession" },
                 new[] { "Bonfire.Analytics.Dto.Controllers" });
         }
     }

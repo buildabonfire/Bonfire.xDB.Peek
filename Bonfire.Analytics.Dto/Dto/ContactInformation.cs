@@ -17,7 +17,7 @@ namespace Bonfire.Analytics.Dto.Dto
         public TrackerDto GetTrackerDto()
         {
             var currentTracker = Tracker.Current;
-
+            
             var trackerDto = new TrackerDto
             {
                 CurrentPage = new CurrentPage { Url = currentTracker.CurrentPage.Url },
@@ -29,7 +29,8 @@ namespace Bonfire.Analytics.Dto.Dto
                     Interaction = GetInteractions(currentTracker.Session.Interaction)
                 },
                 Campaign = GetCampaign(currentTracker.Interaction),
-                Contact = GetContact(currentTracker.Contact)
+                Contact = GetContact(currentTracker.Contact),
+                VisitCount = currentTracker.Contact.System.VisitCount
             };
 
             return trackerDto;
@@ -90,6 +91,8 @@ namespace Bonfire.Analytics.Dto.Dto
                 Extensions = currectContact.Extensions,
                 Facets = currectContact.Facets,
                 Identifiers = currectContact.Identifiers,
+                IdentifiedUser = IdentifiedUser(),
+                IdentifiedStatus = IdentifiedStatus(),
                 IsTemporaryInstance = currectContact.IsTemporaryInstance,
                 System = currectContact.System,
                 Tags = currectContact.Tags
@@ -138,6 +141,15 @@ namespace Bonfire.Analytics.Dto.Dto
             return pagesViewed;
         }
 
+        public string IdentifiedUser()
+        {
+            return Tracker.Current.Contact.Identifiers.Identifier;
+        }
+        public string IdentifiedStatus()
+        {
+            return Tracker.Current.Contact.Identifiers.IdentificationLevel.ToString();
+        }
+
         public List<string> LoadGoals()
         {
             List<string> goals = new List<string>();
@@ -146,6 +158,31 @@ namespace Bonfire.Analytics.Dto.Dto
                                from pageEventData in page.PageEvents
                                where pageEventData.IsGoal
                                select pageEventData).ToList();
+
+            if (conversions.Any())
+            {
+                conversions.Reverse();
+                foreach (var goal in conversions)
+                {
+                    goals.Add($"{goal.Name} ({goal.Value})");
+                }
+            }
+            else
+            {
+                goals.Add("No Goals");
+            }
+
+            return goals;
+        }
+
+        public List<string> LoadEvents()
+        {
+            List<string> goals = new List<string>();
+
+            var conversions = (from page in Tracker.Current.Interaction.GetPages()
+                from pageEventData in page.PageEvents
+                where pageEventData.IsGoal == false
+                select pageEventData).ToList();
 
             if (conversions.Any())
             {
@@ -222,6 +259,9 @@ namespace Bonfire.Analytics.Dto.Dto
 
         public string Campaign { get; set; }
 
+        public int VisitCount { get; set; }
+        
+
         //public List<PatternMatch> PatternMatches
         //{
         //    get
@@ -249,6 +289,15 @@ namespace Bonfire.Analytics.Dto.Dto
             }
         }
 
+        public List<string> EventsList
+        {
+            get
+            {
+                VisitorInformation visitorInformation = new VisitorInformation();
+                return visitorInformation.LoadEvents();
+            }
+        }
+
         public List<string> EngagementStates
         {
             get
@@ -269,6 +318,8 @@ namespace Bonfire.Analytics.Dto.Dto
         public IContactExtensionsContext Extensions { get; set; }
         public IReadOnlyDictionary<string, IFacet> Facets { get; set; }
         public IContactIdentifiersContext Identifiers { get; set; }
+        public string IdentifiedUser { get; set; }
+        public string IdentifiedStatus { get; set; }
         public bool IsTemporaryInstance { get; set; }
         public IContactSystemInfoContext System { get; set; }
         public IContactTagsContext Tags { get; set; }

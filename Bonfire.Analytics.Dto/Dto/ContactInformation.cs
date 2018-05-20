@@ -307,6 +307,8 @@ namespace Bonfire.Analytics.Dto.Dto
             }
         }
 
+        public IContactBehaviorProfilesContext BehaviorProfiles => Tracker.Current.Session.Contact.BehaviorProfiles;
+
     }
 
     public class Contact

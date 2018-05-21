@@ -33,14 +33,14 @@ namespace Bonfire.Analytics.Dto.Dto
                 VisitCount = currentTracker.Contact.System.VisitCount
             };
 
+            Tracker.Current.Session.Contact.GetKeyBehaviorCache();
+
             return trackerDto;
         }
 
         public IVisitProfiles GetTrackerDtoProfiles()
         {
             var currentTracker = Tracker.Current;
-
-            //Sitecore.Analytics.Tracking.VisitProfiles profiles = currentTracker.Interaction.Profiles;
             return currentTracker.Interaction.Profiles;
         }
 
@@ -111,9 +111,6 @@ namespace Bonfire.Analytics.Dto.Dto
                 }).ToList();
 
             contact.InteractionProfiles = interactionProfiles;
-
-            
-
 
             return contact;
         }
@@ -250,26 +247,22 @@ namespace Bonfire.Analytics.Dto.Dto
     public class TrackerDto
     {
         public Contact Contact { get; set; }
-        public CurrentPage CurrentPage { get; set; }
-        public Interactions Interaction { get; set; }
+
+        public Session Session { get; set; }
+
+        public KeyBehaviorCache KeyBehaviorCache => Tracker.Current.Session.Contact.GetKeyBehaviorCache();
+
+        public IContactBehaviorProfilesContext BehaviorProfiles => Tracker.Current.Contact.BehaviorProfiles;
 
         public bool IsActive { get; set; }
 
-        public Session Session { get; set; }
+        public CurrentPage CurrentPage { get; set; }
+
+        public Interactions Interaction { get; set; }
 
         public string Campaign { get; set; }
 
         public int VisitCount { get; set; }
-        
-
-        //public List<PatternMatch> PatternMatches
-        //{
-        //    get
-        //    {
-        //        VisitorInformation visitorInformation = new VisitorInformation();
-        //        return visitorInformation.LoadPatterns();
-        //    }
-        //}
 
         public List<GenericLink> PagesViewed
         {
@@ -306,15 +299,10 @@ namespace Bonfire.Analytics.Dto.Dto
                 return visitorInformation.LoadEngagementStates();
             }
         }
-
-        public IContactBehaviorProfilesContext BehaviorProfiles => Tracker.Current.Session.Contact.BehaviorProfiles;
-
     }
 
     public class Contact
     {
-        //public IDictionary<string, object> Attachments { get; set; }
-        //public BehaviorProfiles BehaviorProfiles { get; set; }
         public Guid ContactId { get; set; }
         public Sitecore.Analytics.Model.ContactSaveMode ContactSaveMode { get; set; }
         public IContactExtensionsContext Extensions { get; set; }

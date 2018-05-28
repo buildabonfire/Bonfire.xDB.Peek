@@ -119,7 +119,7 @@ namespace Bonfire.Analytics.Dto.Dto
         {
             if (currentInteraction.CampaignId.HasValue)
             {
-                Item campaign = Sitecore.Context.Database.GetItem(currentInteraction.CampaignId.ToId());
+                var campaign = Sitecore.Context.Database.GetItem(currentInteraction.CampaignId.ToId());
                 if (campaign != null) return campaign.Name;
             }
 
@@ -129,9 +129,9 @@ namespace Bonfire.Analytics.Dto.Dto
         public List<GenericLink> LoadPages()
         {
             var pagesViewed = new List<GenericLink>();
-            foreach (IPageContext page in Tracker.Current.Interaction.GetPages())
+            foreach (var page in Tracker.Current.Interaction.GetPages())
             {
-                GenericLink link = new GenericLink(CleanPageName(page), page.Url.Path, false);
+                var link = new GenericLink(CleanPageName(page), page.Url.Path, false);
                 pagesViewed.Add(link);
             }
             pagesViewed.Reverse();
@@ -149,7 +149,7 @@ namespace Bonfire.Analytics.Dto.Dto
 
         public List<string> LoadGoals()
         {
-            List<string> goals = new List<string>();
+            var goals = new List<string>();
 
             var conversions = (from page in Tracker.Current.Interaction.GetPages()
                                from pageEventData in page.PageEvents
@@ -174,7 +174,7 @@ namespace Bonfire.Analytics.Dto.Dto
 
         public List<string> LoadEvents()
         {
-            List<string> goals = new List<string>();
+            var goals = new List<string>();
 
             var conversions = (from page in Tracker.Current.Interaction.GetPages()
                 from pageEventData in page.PageEvents
@@ -199,7 +199,7 @@ namespace Bonfire.Analytics.Dto.Dto
 
         public List<string> LoadEngagementStates()
         {
-            List<string> states = new List<string>();
+            var states = new List<string>();
 
             try
             {
@@ -208,7 +208,7 @@ namespace Bonfire.Analytics.Dto.Dto
                 if (engagementstates.Any())
                 {
                     foreach (
-                        AutomationStateContext context in
+                        var context in
                             AutomationStateManager.Create(Tracker.Current.Contact).GetAutomationStates())
                     {
                         states.Add($"{context.PlanItem.DisplayName}: {context.StateItem.DisplayName}");
@@ -228,7 +228,10 @@ namespace Bonfire.Analytics.Dto.Dto
 
         private string CleanPageName(IPageContext p)
         {
-            string pageName = p.Url.Path.Replace("/en", "/").Replace("//", "/").Remove(0, 1).Replace(".aspx", "");
+            if (string.IsNullOrEmpty(p?.Url?.Path))
+                return "";
+
+            var pageName = p.Url.Path.Replace("/en", "/").Replace("//", "/").Remove(0, 1).Replace(".aspx", "");
             if (pageName == String.Empty || pageName == "en") pageName = "Home";
             if (pageName.Contains("/"))
             {
@@ -268,7 +271,7 @@ namespace Bonfire.Analytics.Dto.Dto
         {
             get
             {
-                VisitorInformation visitorInformation = new VisitorInformation();
+                var visitorInformation = new VisitorInformation();
                 return visitorInformation.LoadPages();
             }
         }
@@ -277,7 +280,7 @@ namespace Bonfire.Analytics.Dto.Dto
         {
             get
             {
-                VisitorInformation visitorInformation = new VisitorInformation();
+                var visitorInformation = new VisitorInformation();
                 return visitorInformation.LoadGoals();
             }
         }
@@ -286,7 +289,7 @@ namespace Bonfire.Analytics.Dto.Dto
         {
             get
             {
-                VisitorInformation visitorInformation = new VisitorInformation();
+                var visitorInformation = new VisitorInformation();
                 return visitorInformation.LoadEvents();
             }
         }
@@ -295,7 +298,7 @@ namespace Bonfire.Analytics.Dto.Dto
         {
             get
             {
-                VisitorInformation visitorInformation = new VisitorInformation();
+                var visitorInformation = new VisitorInformation();
                 return visitorInformation.LoadEngagementStates();
             }
         }

@@ -13,10 +13,8 @@ namespace Bonfire.Analytics.Dto.Repositories
         TrackerDto GetTrackerDto();
         IVisitProfiles GetTrackerDtoProfiles();
         Interactions GetInteractions(CurrentInteraction currentInteraction);
-        Contact GetContact(Sitecore.Analytics.Tracking.Contact currectContact);
+        
         string GetCampaign(CurrentInteraction currentInteraction);
         List<GenericLink> LoadPages();
-        List<string> LoadGoals();
-        List<string> LoadEngagementStates();
     }
 }

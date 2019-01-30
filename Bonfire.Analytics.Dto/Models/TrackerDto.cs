@@ -14,7 +14,7 @@ namespace Bonfire.Analytics.Dto.Models
     [Serializable]
     public class TrackerDto
     {
-        public Contact Contact { get; set; }
+        public Sitecore.XConnect.Contact Contact { get; set; }
         public CurrentPage CurrentPage { get; set; }
         public Interactions Interaction { get; set; }
 
@@ -26,9 +26,10 @@ namespace Bonfire.Analytics.Dto.Models
 
         public List<GenericLink> PagesViewed { get; set; }
 
-        public List<string> GoalsList { get; set; }
+        public List<PageEvent> GoalsList { get; set; }
+        public List<PageEvent> PastGoals { get; set; }
 
-        public List<string> EngagementStates { get; set; }
+        public List<KeyValuePair<string, Sitecore.XConnect.Facet>> Facets { get; set; }
 
     }
 

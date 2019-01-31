@@ -18,8 +18,6 @@ Global
 		{6F8177E1-66F9-4EA9-85E7-73687A6B467C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F8177E1-66F9-4EA9-85E7-73687A6B467C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AEFB7F03-6712-4B78-BA0A-1A9AF9418CA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AEFB7F03-6712-4B78-BA0A-1A9AF9418CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AEFB7F03-6712-4B78-BA0A-1A9AF9418CA2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{AEFB7F03-6712-4B78-BA0A-1A9AF9418CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEFB7F03-6712-4B78-BA0A-1A9AF9418CA2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AEFB7F03-6712-4B78-BA0A-1A9AF9418CA2}.Release|Any CPU.Deploy.0 = Release|Any CPU
@@ -28,7 +26,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Caching.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.ServiceBus.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.WindowsAzure.Storage.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Configuration.6.0.1304.0\lib\NET45
 		SolutionGuid = {4C705F25-19A1-436C-92FE-E09F8126A400}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Caching.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.ServiceBus.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.WindowsAzure.Storage.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Configuration.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal

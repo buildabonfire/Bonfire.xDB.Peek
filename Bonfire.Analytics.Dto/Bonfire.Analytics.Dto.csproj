@@ -78,6 +78,7 @@
     <Compile Include="Models\FacetModel.cs" />
     <Compile Include="Models\FacetModelModel.cs" />
     <Compile Include="Models\PageEvent.cs" />
+    <Compile Include="Models\PatternProfile.cs" />
     <Compile Include="Repositories\ContactIdentificationRepository.cs" />
     <Compile Include="Repositories\ContactRepository.cs" />
     <Compile Include="Extensions\GuidExtensions.cs" />

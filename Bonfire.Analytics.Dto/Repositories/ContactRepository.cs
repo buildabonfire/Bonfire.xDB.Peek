@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Bonfire.Analytics.Dto.Extensions;
 using Bonfire.Analytics.Dto.Models;
@@ -15,11 +14,6 @@ using Sitecore.Marketing.Definitions.AutomationPlans.Model;
 using Sitecore.XConnect;
 using Sitecore.XConnect.Client;
 using Sitecore.XConnect.Client.Serialization;
-using Sitecore.XConnect.Collection.Model;
-using Contact = Bonfire.Analytics.Dto.Models.Contact;
-using Session = Bonfire.Analytics.Dto.Models.Session;
-using System.Web.Script.Serialization;
-using Sitecore.Extensions;
 
 namespace Bonfire.Analytics.Dto.Repositories
 {
@@ -45,26 +39,18 @@ namespace Bonfire.Analytics.Dto.Repositories
             var trackerDto = new TrackerDto
             {
                 CurrentPage = new CurrentPage { Url = currentTracker.CurrentPage.Url },
-                //Interaction = GetInteractions(currentTracker.Interaction),
                 IsActive = currentTracker.IsActive,
-                //Session = CreateSession(currentTracker),
-                //Campaign = GetCampaign(currentTracker.Interaction),
                 Contact = GetContact(),
+                Interaction = GetInteractions(currentTracker.Interaction),
                 Facets = this.GetContact().Facets.ToList(),
                 PagesViewed = LoadPages(),
                 GoalsList = eventRepository.GetCurrentGoals().ToList(),
-                PastGoals = eventRepository.GetHistoricGoals().ToList()
+                PastGoals = eventRepository.GetHistoricGoals().ToList(),
+                CurrentProfiles = GetCurrentProfiles(),
+                PastProfiles = GetPastProfiles()
             };
 
             return trackerDto;
-        }
-
-
-
-        public IVisitProfiles GetTrackerDtoProfiles()
-        {
-            var currentTracker = Tracker.Current;
-            return currentTracker.Interaction.Profiles;
         }
 
         public Interactions GetInteractions(CurrentInteraction currentInteraction)
@@ -84,7 +70,6 @@ namespace Bonfire.Analytics.Dto.Repositories
                 Ip = currentInteraction.Ip,
                 Keywords = currentInteraction.Keywords,
                 Language = currentInteraction.Language,
-                Profiles = currentInteraction.Profiles,
                 ScreenInfo = currentInteraction.ScreenInfo,
                 SiteName = currentInteraction.SiteName,
                 Value = currentInteraction.Value
@@ -147,12 +132,6 @@ namespace Bonfire.Analytics.Dto.Repositories
             return pagesViewed;
         }
 
-
-        private IAutomationPlanDefinition CreateEngagementPlanState(AutomationPlanActivityEnrollmentCacheEntry enrollment)
-        {
-            return AutomationPlanDefinitionManager.Get(enrollment.AutomationPlanDefinitionId, Context.Language.CultureInfo) ?? AutomationPlanDefinitionManager.Get(enrollment.AutomationPlanDefinitionId, CultureInfo.InvariantCulture);
-        }
-
         private string CleanPageName(IPageContext p)
         {
             string pageName = p.Url.Path.Replace("/en", "/").Replace("//", "/").Remove(0, 1).Replace(".aspx", "");
@@ -177,6 +156,31 @@ namespace Bonfire.Analytics.Dto.Repositories
                 PatternId = profile.PatternId,
                 ProfileName = Context.Database.GetItem(profile.Id).Name,
                 PatterneName = (!ID.IsNullOrEmpty(profile.PatternId)) ? Context.Database.GetItem(profile.PatternId).Name : ""
+            };
+        }
+
+        private static List<PatternProfile> GetCurrentProfiles()
+        {
+            var profileNames = Tracker.Current.Interaction.Profiles.GetProfileNames();
+            var profile = profileNames.Select(p => Tracker.Current.Interaction.Profiles[p]);
+            return profile.Select(CreatePatternProfile).ToList();
+        }
+
+        private static IEnumerable<ExtraBehaviorProfileContext> GetPastProfiles()
+        {
+            return Tracker.Current.Contact.BehaviorProfiles.Profiles.Select(CreateExtraBehaviorProfileContext);
+        }
+
+        private static PatternProfile CreatePatternProfile(Profile profile)
+        {
+            return new PatternProfile
+            {
+                Count = profile.Count,
+                PatternName = profile.PatternId != null ? Context.Database.GetItem(profile.PatternId.ToId()).Name : "",
+                ProfileName = profile.ProfileName,
+                Score = profile.Total,
+                PatternId = profile.PatternId,
+                PatternLabel = profile.PatternLabel
             };
         }
     }

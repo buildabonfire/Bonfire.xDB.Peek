@@ -6,6 +6,7 @@ using Bonfire.Analytics.Dto.Models;
 using Bonfire.Analytics.Dto.Serialization;
 using DocumentFormat.OpenXml.ExtendedProperties;
 using Newtonsoft.Json;
+using Sitecore.Analytics.Data.Items;
 using Sitecore.XConnect;
 
 namespace Bonfire.Analytics.Dto.Controllers

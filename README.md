@@ -16,7 +16,7 @@ Outputs the aggregation of the user's profile.
 Clears the user's session is Sitecore. This has the same effect as timing the user's sessions out. This causes the session to be written to Mongo.
 
 ## JSON
-An example of the output https://gist.github.com/dnstommy/734691e550b2578c4335a292b5ff15ca
+An example of the output https://gist.github.com/dnstommy/ccd686f785a14096ef8305789f8a3802
 
 ## Deploy
 Pull the version from releases that matches your version. Install as an update package. 

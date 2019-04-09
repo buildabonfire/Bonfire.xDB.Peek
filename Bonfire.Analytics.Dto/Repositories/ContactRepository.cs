@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Bonfire.Analytics.Dto.Extensions;
 using Bonfire.Analytics.Dto.Models;
+using Newtonsoft.Json;
 using Sitecore;
 using Sitecore.Analytics;
 using Sitecore.Analytics.Tracking;
@@ -11,20 +11,25 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Marketing.Definitions;
 using Sitecore.Marketing.Definitions.AutomationPlans.Model;
-using Sitecore.XConnect.Collection.Model;
-using Sitecore.Xdb.MarketingAutomation.Tracking.Extensions;
-using Contact = Bonfire.Analytics.Dto.Models.Contact;
-using Session = Bonfire.Analytics.Dto.Models.Session;
+using Sitecore.XConnect;
+using Sitecore.XConnect.Client;
+using Sitecore.XConnect.Client.Serialization;
 
 namespace Bonfire.Analytics.Dto.Repositories
 {
     public class ContactRepository : IContactRepository
     {
+        private readonly IContactIdentificationRepository contactIdentificationRepository;
+        private readonly IFacetRepository facetRepository;
+        private readonly IEventRepository eventRepository;
         public IDefinitionManager<IAutomationPlanDefinition> AutomationPlanDefinitionManager { get; }
 
         public ContactRepository(IServiceProvider serviceProvider)
         {
             AutomationPlanDefinitionManager = serviceProvider.GetDefinitionManagerFactory().GetDefinitionManager<IAutomationPlanDefinition>();
+            contactIdentificationRepository = new ContactIdentificationRepository();
+            facetRepository = new FacetRepository();
+            eventRepository = new EventRepository();
         }
 
         public TrackerDto GetTrackerDto()
@@ -34,25 +39,18 @@ namespace Bonfire.Analytics.Dto.Repositories
             var trackerDto = new TrackerDto
             {
                 CurrentPage = new CurrentPage { Url = currentTracker.CurrentPage.Url },
-                Interaction = GetInteractions(currentTracker.Interaction),
                 IsActive = currentTracker.IsActive,
-                Session = CreateSession(currentTracker),
-                Campaign = GetCampaign(currentTracker.Interaction),
-                Contact = GetContact(currentTracker.Contact),
+                Contact = GetContact(),
+                Interaction = GetInteractions(currentTracker.Interaction),
+                Facets = this.GetContact().Facets.ToList(),
                 PagesViewed = LoadPages(),
-                GoalsList = LoadGoals(),
-                EngagementStates = LoadEngagementStates()
+                GoalsList = eventRepository.GetCurrentGoals().ToList(),
+                PastGoals = eventRepository.GetHistoricGoals().ToList(),
+                CurrentProfiles = GetCurrentProfiles(),
+                PastProfiles = GetPastProfiles()
             };
 
             return trackerDto;
-        }
-
-
-
-        public IVisitProfiles GetTrackerDtoProfiles()
-        {
-            var currentTracker = Tracker.Current;
-            return currentTracker.Interaction.Profiles;
         }
 
         public Interactions GetInteractions(CurrentInteraction currentInteraction)
@@ -72,7 +70,6 @@ namespace Bonfire.Analytics.Dto.Repositories
                 Ip = currentInteraction.Ip,
                 Keywords = currentInteraction.Keywords,
                 Language = currentInteraction.Language,
-                Profiles = currentInteraction.Profiles,
                 ScreenInfo = currentInteraction.ScreenInfo,
                 SiteName = currentInteraction.SiteName,
                 Value = currentInteraction.Value
@@ -82,43 +79,35 @@ namespace Bonfire.Analytics.Dto.Repositories
             return interactions;
         }
 
-        public Contact GetContact(Sitecore.Analytics.Tracking.Contact currectContact)
+        public Sitecore.XConnect.Contact GetContact()
         {
-            var contact = new Contact
-            {
-                Profiles = currectContact.BehaviorProfiles.Profiles.Select(CreateExtraBehaviorProfileContext).ToList(),
-                ContactId = currectContact.ContactId,
-                ContactSaveMode = currectContact.ContactSaveMode,
-                Extensions = currectContact.Extensions,
-                Facets = currectContact.Facets,
-                Identifiers = currectContact.Identifiers,
-                IsTemporaryInstance = currectContact.IsTemporaryInstance,
-                System = currectContact.System,
-                Tags = currectContact.Tags
-            };
+            var contactFacets = facetRepository.GetAllContactFacetModels();
+            var facetList = contactFacets.Select(x => x.Name).Where(x => x != "KeyBehaviorCache").Distinct();
 
+            var contactReference = this.contactIdentificationRepository.GetContactReference();
 
-            var items = Tracker.Current.Interaction.Profiles.GetProfileNames();
-
-            var interactionProfiles = (from profileItem in items
-                select Tracker.Current.Interaction.Profiles[profileItem]
-                into profile
-                let scores = profile.ToList()
-                select new ExtraBehaviorProfileContext
+            
+                using (var client = this.contactIdentificationRepository.CreateContext())
                 {
-                    PatterneName = profile.PatternLabel,
-                    ProfileName = profile.ProfileName,
-                    Total = profile.Total,
-                    PatternId = profile.PatternId.ToId(),
-                    NumberOfTimesScored = profile.Count,
-                    StringScore = scores
-                }).ToList();
+                    var contact = client.Get(contactReference, new ContactExpandOptions(facetList.ToArray()));
 
-            contact.InteractionProfiles = interactionProfiles;
-            return contact;
+                    var thing = JsonConvert.SerializeObject(contact);
+
+                    var serializerSettings = new JsonSerializerSettings
+                    {
+                        ContractResolver = new XdbJsonContractResolver(client.Model,
+                            serializeFacets: true,
+                            serializeContactInteractions: true),
+                        DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                        DefaultValueHandling = DefaultValueHandling.Ignore,
+                        Formatting = Formatting.None
+                    };
+
+                    return contact;
+            }
+          
         }
-
-        
+    
 
         public string GetCampaign(CurrentInteraction currentInteraction)
         {
@@ -141,63 +130,6 @@ namespace Bonfire.Analytics.Dto.Repositories
             }
             pagesViewed.Reverse();
             return pagesViewed;
-        }
-
-        public List<string> LoadGoals()
-        {
-            List<string> goals = new List<string>();
-
-            var conversions = (from page in Tracker.Current.Interaction.GetPages()
-                               from pageEventData in page.PageEvents
-                               where pageEventData.IsGoal
-                               select pageEventData).ToList();
-
-            if (conversions.Any())
-            {
-                conversions.Reverse();
-                foreach (var goal in conversions)
-                {
-                    goals.Add($"{goal.Name} ({goal.Value})");
-                }
-            }
-            else
-            {
-                goals.Add("No Goals");
-            }
-
-            return goals;
-        }
-
-        public List<string> LoadEngagementStates()
-        {
-            var states = new List<string>();
-
-            try
-            {
-                var plans = Tracker.Current?.Contact?.GetPlanEnrollmentCache();
-                var enrollments = plans?.ActivityEnrollments;
-                
-                //var engagementstates = AutomationStateManager.Create(Tracker.Current.Contact).GetAutomationStates();
-
-                if (enrollments != null && enrollments.Any())
-                {
-                    states = enrollments.Select(CreateEngagementPlanState).Select(x => x.Name).ToList();
-                }
-                else
-                {
-                    states.Add("No Engagement States");
-                }
-            }
-            catch (Exception)
-            {
-                states.Add("Unable to load Engagement States");
-            }
-            return states;
-        }
-
-        private IAutomationPlanDefinition CreateEngagementPlanState(AutomationPlanActivityEnrollmentCacheEntry enrollment)
-        {
-            return AutomationPlanDefinitionManager.Get(enrollment.AutomationPlanDefinitionId, Context.Language.CultureInfo) ?? AutomationPlanDefinitionManager.Get(enrollment.AutomationPlanDefinitionId, CultureInfo.InvariantCulture);
         }
 
         private string CleanPageName(IPageContext p)
@@ -227,12 +159,28 @@ namespace Bonfire.Analytics.Dto.Repositories
             };
         }
 
-        private Session CreateSession(ITracker currentTracker)
+        private static List<PatternProfile> GetCurrentProfiles()
         {
-            return new Session
+            var profileNames = Tracker.Current.Interaction.Profiles.GetProfileNames();
+            var profile = profileNames.Select(p => Tracker.Current.Interaction.Profiles[p]);
+            return profile.Select(CreatePatternProfile).ToList();
+        }
+
+        private static IEnumerable<ExtraBehaviorProfileContext> GetPastProfiles()
+        {
+            return Tracker.Current.Contact.BehaviorProfiles.Profiles.Select(CreateExtraBehaviorProfileContext);
+        }
+
+        private static PatternProfile CreatePatternProfile(Profile profile)
+        {
+            return new PatternProfile
             {
-                Contact = GetContact(currentTracker.Session.Contact),
-                Interaction = GetInteractions(currentTracker.Session.Interaction)
+                Count = profile.Count,
+                PatternName = profile.PatternId != null ? Context.Database.GetItem(profile.PatternId.ToId()).Name : "",
+                ProfileName = profile.ProfileName,
+                Score = profile.Total,
+                PatternId = profile.PatternId,
+                PatternLabel = profile.PatternLabel
             };
         }
     }

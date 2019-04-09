@@ -1,55 +1,30 @@
-﻿
-
-using System;
-using System.Collections.Generic;
-using Sitecore.Analytics.Core;
-using Sitecore.Analytics.Model;
-using Sitecore.Analytics.Model.Entities;
-using Sitecore.Analytics.Model.Framework;
-using Sitecore.Analytics.Tracking;
-using Sitecore.Data;
-
-namespace Bonfire.Analytics.Dto.Models
+﻿namespace Bonfire.Analytics.Dto.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using Sitecore.Analytics.Core;
+    using Sitecore.Analytics.Model;
+    using Sitecore.Analytics.Model.Entities;
+    using Sitecore.Analytics.Model.Framework;
+    using Sitecore.Analytics.Tracking;
+    using Sitecore.Data;
+
     [Serializable]
     public class TrackerDto
     {
-        public Contact Contact { get; set; }
+        public Sitecore.XConnect.Contact Contact { get; set; }
         public CurrentPage CurrentPage { get; set; }
         public Interactions Interaction { get; set; }
-
         public bool IsActive { get; set; }
-
         public Session Session { get; set; }
-
         public string Campaign { get; set; }
-
         public List<GenericLink> PagesViewed { get; set; }
+        public List<PageEvent> GoalsList { get; set; }
+        public List<PageEvent> PastGoals { get; set; }
+        public List<KeyValuePair<string, Sitecore.XConnect.Facet>> Facets { get; set; }
+        public List<PatternProfile> CurrentProfiles { get; set; }
+        public IEnumerable<ExtraBehaviorProfileContext> PastProfiles { get; set; }
 
-        public List<string> GoalsList { get; set; }
-
-        public List<string> EngagementStates { get; set; }
-
-    }
-
-    public class Contact
-    {
-        public Guid ContactId { get; set; }
-        public ContactSaveMode ContactSaveMode { get; set; }
-        public IContactExtensionsContext Extensions { get; set; }
-        public IReadOnlyDictionary<string, IFacet> Facets { get; set; }
-        public IReadOnlyCollection<ContactIdentifier> Identifiers { get; set; }
-        public bool IsTemporaryInstance { get; set; }
-        public IContactSystemInfoContext System { get; set; }
-        public IContactTagsContext Tags { get; set; }
-        public List<ExtraBehaviorProfileContext> Profiles { get; set; }
-        public List<ExtraBehaviorProfileContext> InteractionProfiles { get; set; }
-
-    }
-
-    public class BehaviorProfiles
-    {
-        public IEnumerable<IBehaviorProfileContext> Profiles { get; set; }
     }
 
     public class ExtraBehaviorProfileContext
@@ -97,19 +72,11 @@ namespace Bonfire.Analytics.Dto.Models
 
         public string Language { get; set; }
 
-        public IVisitProfiles Profiles { get; set; }
-
         public ScreenInformationBase ScreenInfo { get; set; }
 
         public string SiteName { get; set; }
 
         public int Value { get; set; }
-    }
-
-    public class Session
-    {
-        public Interactions Interaction { get; set; }
-        public Contact Contact { get; set; }
     }
 
     public class GenericLink
@@ -121,22 +88,10 @@ namespace Bonfire.Analytics.Dto.Models
             OpenInBlankWindow = openInBlankWindow;
         }
 
-        public string Title
-        {
-            get;
-            set;
-        }
+        public string Title { get; set; }
 
-        public string Url
-        {
-            get;
-            set;
-        }
+        public string Url { get; set; }
 
-        public bool OpenInBlankWindow
-        {
-            get;
-            set;
-        }
+        public bool OpenInBlankWindow { get; set; }
     }
 }

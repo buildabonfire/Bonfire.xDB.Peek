@@ -1,23 +1,34 @@
-﻿namespace Bonfire.Analytics.Dto.Controllers
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Bonfire.Analytics.Dto.Extensions;
+using Bonfire.Analytics.Dto.Models;
+using Bonfire.Analytics.Dto.Serialization;
+using DocumentFormat.OpenXml.ExtendedProperties;
+using Newtonsoft.Json;
+using Sitecore.Analytics.Data.Items;
+using Sitecore.XConnect;
+
+namespace Bonfire.Analytics.Dto.Controllers
 {
     using System.Web.Mvc;
     using Repositories;
 
     public class VisitorController : Controller
     {
-        private readonly IContactRepository _contactRepository;
+        private readonly IContactRepository contactRepository;
 
         public VisitorController(IContactRepository contactRepository)
         {
-            _contactRepository = contactRepository;
+            this.contactRepository = contactRepository;
         }
 
         [HttpGet]
-        public JsonResult VisitorDetailsJson()
+        public ActionResult VisitorDetailsJson()
         {
-            var trackerDto = _contactRepository.GetTrackerDto();
+            var trackerDto = contactRepository.GetTrackerDto();
 
-            return Json(trackerDto, JsonRequestBehavior.AllowGet);
+            return new JsonNet(trackerDto);
         }
 
         [HttpGet]

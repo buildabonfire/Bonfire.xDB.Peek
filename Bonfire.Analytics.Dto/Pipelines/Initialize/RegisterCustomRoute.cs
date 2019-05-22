@@ -13,13 +13,13 @@ namespace Bonfire.Analytics.Dto.Pipelines.Initialize
         public override void Process(PipelineArgs args)
         {
             RouteTable.Routes.MapRoute(
-                "VisitorData",
+                "bonfire-VisitorData",
                 BaseRoute + ApiVersion + "/VisitorDetails",
                 new { controller = "Visitor", action = "VisitorDetailsJson" },
                 new[] { "Bonfire.Analytics.Dto.Controllers" });
 
             RouteTable.Routes.MapRoute(
-                "ClearVisitorSession",
+                "bonfire-ClearVisitorSession",
                 BaseRoute + ApiVersion + "/ClearVisitorSession",
                 new { controller = "Visitor", action = "ClearVisitorSession" },
                 new[] { "Bonfire.Analytics.Dto.Controllers" });

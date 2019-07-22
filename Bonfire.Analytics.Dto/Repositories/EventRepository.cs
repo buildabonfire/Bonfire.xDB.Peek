@@ -47,11 +47,11 @@ namespace Bonfire.Analytics.Dto.Repositories
 
             foreach (var cachedGoal in conversions)
             {
-                var goal = GetGoalDefinition(cachedGoal.ItemId);
+                var goal = GetGoalDefinition(cachedGoal.PageEventDefinitionId);
 
                 yield return new PageEvent
                 {
-                    Title = cachedGoal.Name ?? "(Unknown)",
+                    Title = goal.Name ?? "(Unknown)",
                     Date = cachedGoal.DateTime,
                     EngagementValue = goal?.EngagementValuePoints ?? 0,
                     IsCurrentVisit = false,

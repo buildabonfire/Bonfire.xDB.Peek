@@ -51,7 +51,7 @@ namespace Bonfire.Analytics.Dto.Repositories
 
                 yield return new PageEvent
                 {
-                    Title = goal?.Name ?? "(Unknown)",
+                    Title = cachedGoal.Name ?? "(Unknown)",
                     Date = cachedGoal.DateTime,
                     EngagementValue = goal?.EngagementValuePoints ?? 0,
                     IsCurrentVisit = false,

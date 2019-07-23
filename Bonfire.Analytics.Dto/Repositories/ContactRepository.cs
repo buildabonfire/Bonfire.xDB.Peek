@@ -22,6 +22,9 @@ namespace Bonfire.Analytics.Dto.Repositories
         private readonly IContactIdentificationRepository contactIdentificationRepository;
         private readonly IFacetRepository facetRepository;
         private readonly IEventRepository eventRepository;
+        private readonly IEngagementPlanStateRepository engagementPlanStateRepository;
+        private readonly ICampaignRepository campaignRepository;
+
         public IDefinitionManager<IAutomationPlanDefinition> AutomationPlanDefinitionManager { get; }
 
         public ContactRepository(IServiceProvider serviceProvider)
@@ -30,6 +33,8 @@ namespace Bonfire.Analytics.Dto.Repositories
             contactIdentificationRepository = new ContactIdentificationRepository();
             facetRepository = new FacetRepository();
             eventRepository = new EventRepository();
+            engagementPlanStateRepository = new EngagementPlanStateRepository();
+            campaignRepository = new CampaignRepository();
         }
 
         public TrackerDto GetTrackerDto()
@@ -46,6 +51,9 @@ namespace Bonfire.Analytics.Dto.Repositories
                 PagesViewed = LoadPages(),
                 GoalsList = eventRepository.GetCurrentGoals().ToList(),
                 PastGoals = eventRepository.GetHistoricGoals().ToList(),
+                EngagementPlanStates = engagementPlanStateRepository.GetCurrent(),
+                CurrentCampaign = campaignRepository.GetCurrent(),
+                PastCampaigns = campaignRepository.GetHistoric(),
                 CurrentProfiles = GetCurrentProfiles(),
                 PastProfiles = GetPastProfiles()
             };

@@ -17,14 +17,15 @@
         public Interactions Interaction { get; set; }
         public bool IsActive { get; set; }
         public Session Session { get; set; }
-        public string Campaign { get; set; }
+        public IEnumerable<Campaign> PastCampaigns { get; set; }
+        public Campaign CurrentCampaign { get; set; }
         public List<GenericLink> PagesViewed { get; set; }
         public List<PageEvent> GoalsList { get; set; }
         public List<PageEvent> PastGoals { get; set; }
         public List<KeyValuePair<string, Sitecore.XConnect.Facet>> Facets { get; set; }
         public List<PatternProfile> CurrentProfiles { get; set; }
         public IEnumerable<ExtraBehaviorProfileContext> PastProfiles { get; set; }
-
+        public IEnumerable<EngagementPlanState> EngagementPlanStates { get; set; }
     }
 
     public class ExtraBehaviorProfileContext

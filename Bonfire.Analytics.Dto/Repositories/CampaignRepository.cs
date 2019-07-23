@@ -4,12 +4,15 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using Bonfire.Analytics.Dto.Models;
 using Sitecore;
 using Sitecore.Analytics;
 using Sitecore.Marketing.Definitions;
 using Sitecore.Marketing.Definitions.Campaigns;
+using Sitecore.Marketing.Definitions.PageEvents;
 using Sitecore.Marketing.Taxonomy;
+using Sitecore.Marketing.Taxonomy.Extensions;
 
 namespace Bonfire.Analytics.Dto.Repositories
 {
@@ -17,6 +20,13 @@ namespace Bonfire.Analytics.Dto.Repositories
     {
         private readonly IChannelTaxonomyManager channelTaxonomyManager;
         private readonly IDefinitionManager<ICampaignActivityDefinition> campaignDefinitionManager;
+
+        public CampaignRepository()
+        {
+            this.channelTaxonomyManager = DependencyResolver.Current.GetService<IChannelTaxonomyManager>();
+            this.campaignDefinitionManager = DependencyResolver.Current.GetService<IDefinitionManager<ICampaignActivityDefinition>>();
+        }
+
         public Campaign GetCurrent()
         {
             if (!Tracker.Current.Interaction.CampaignId.HasValue)

@@ -1,19 +1,18 @@
 ﻿
 using Sitecore;
 using Sitecore.XConnect.Collection.Model;
+using Sitecore.Xdb.MarketingAutomation.Tracking.Extensions;
 
 namespace Bonfire.Analytics.Dto.Repositories
 {
-    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using Sitecore.Analytics;
-    using Bonfire.Analytics.Dto.Models;
-    using Sitecore.Marketing.Automation.Data;
+    using Models;
     using Sitecore.Marketing.Definitions;
     using Sitecore.Marketing.Definitions.AutomationPlans.Model;
-    using Sitecore.Xdb.MarketingAutomation.Tracking.Extensions;
+
     public class EngagementPlanStateRepository : IEngagementPlanStateRepository
     {
         private IDefinitionManager<IAutomationPlanDefinition> AutomationPlanDefinitionManager { get; }

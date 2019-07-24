@@ -119,22 +119,22 @@
       <Version>9.1.1</Version>
     </PackageReference>
     <PackageReference Include="Sitecore.Xdb.MarketingAutomation.Tracking">
-      <Version>9.0.2</Version>
+      <Version>9.1.1</Version>
     </PackageReference>
     <PackageReference Include="Sitecore.Marketing">
-      <Version>13.0.0</Version>
+      <Version>9.1.1</Version>
     </PackageReference>
     <PackageReference Include="Sitecore.Marketing.Automation">
-      <Version>9.2.0</Version>
+      <Version>9.1.1</Version>
     </PackageReference>
     <PackageReference Include="Sitecore.Mvc">
-      <Version>3.0.0</Version>
+      <Version>9.1.1</Version>
     </PackageReference>
     <PackageReference Include="Sitecore.Update">
-      <Version>4.0.0</Version>
+      <Version>9.1.1</Version>
     </PackageReference>
     <PackageReference Include="Sitecore.XConnect">
-      <Version>2.0.0</Version>
+      <Version>9.1.1</Version>
     </PackageReference>
     <PackageReference Include="Sitecore.Zip">
       <Version>9.1.1</Version>

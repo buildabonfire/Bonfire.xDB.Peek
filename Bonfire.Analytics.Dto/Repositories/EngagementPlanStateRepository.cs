@@ -1,5 +1,6 @@
 ﻿
 using Sitecore;
+using Sitecore.Marketing.Automation.Definitions.AutomationCampaignTemplates;
 using Sitecore.XConnect.Collection.Model;
 
 namespace Bonfire.Analytics.Dto.Repositories
@@ -14,9 +15,17 @@ namespace Bonfire.Analytics.Dto.Repositories
     using Sitecore.Marketing.Definitions;
     using Sitecore.Marketing.Definitions.AutomationPlans.Model;
     using Sitecore.Xdb.MarketingAutomation.Tracking.Extensions;
+    using System.Web.Mvc;
+
     public class EngagementPlanStateRepository : IEngagementPlanStateRepository
     {
         private IDefinitionManager<IAutomationPlanDefinition> AutomationPlanDefinitionManager { get; }
+
+        public EngagementPlanStateRepository()
+        {
+            this.AutomationPlanDefinitionManager = DependencyResolver.Current.GetService<IDefinitionManager<IAutomationPlanDefinition>>();
+        }
+
         public IEnumerable<EngagementPlanState> GetCurrent()
         {
             var plans = Tracker.Current?.Contact?.GetPlanEnrollmentCache();

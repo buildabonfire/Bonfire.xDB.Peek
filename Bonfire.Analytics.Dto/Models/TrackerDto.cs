@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using Sitecore.Analytics.Core;
     using Sitecore.Analytics.Model;
-    using Sitecore.Analytics.Model.Entities;
-    using Sitecore.Analytics.Model.Framework;
     using Sitecore.Analytics.Tracking;
     using Sitecore.Data;
 

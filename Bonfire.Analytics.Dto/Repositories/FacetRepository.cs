@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Bonfire.Analytics.Dto.Models;
 using Sitecore.XConnect;
 using Sitecore.XConnect.Client;
-using Sitecore.XConnect.Client.WebApi;
 using Sitecore.XConnect.Schema;
 
 namespace Bonfire.Analytics.Dto.Repositories

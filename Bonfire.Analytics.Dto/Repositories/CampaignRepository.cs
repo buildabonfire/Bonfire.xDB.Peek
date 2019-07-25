@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using Bonfire.Analytics.Dto.Models;
 using Sitecore;
 using Sitecore.Analytics;
 using Sitecore.Marketing.Definitions;
 using Sitecore.Marketing.Definitions.Campaigns;
-using Sitecore.Marketing.Definitions.PageEvents;
 using Sitecore.Marketing.Taxonomy;
-using Sitecore.Marketing.Taxonomy.Extensions;
 
 namespace Bonfire.Analytics.Dto.Repositories
 {

@@ -23,6 +23,12 @@ namespace Bonfire.Analytics.Dto.Pipelines.Initialize
                 BaseRoute + ApiVersion + "/ClearVisitorSession",
                 new { controller = "Visitor", action = "ClearVisitorSession" },
                 new[] { "Bonfire.Analytics.Dto.Controllers" });
+
+            RouteTable.Routes.MapRoute(
+                "bonfire-VisitorDetails",
+                "VisitorDetails",
+                new { controller = "BonfireDto", action = "Details" },
+                new[] { "Bonfire.Analytics.Dto.Controllers" });
         }
     }
 }

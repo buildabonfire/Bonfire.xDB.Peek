@@ -171,7 +171,7 @@
   @{
     var jsonSettings = new JsonSerializerSettings()
     {
-      ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+      ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
       PreserveReferencesHandling = PreserveReferencesHandling.Objects
     };
     var contacts = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Contact));
@@ -182,7 +182,7 @@
     var engagementPlanStates = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.EngagementPlanStates));
     var currentCampaign = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.CurrentCampaign));
     var pastCampaigns = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.PastCampaigns));
-    var facets = Model.Facets != null ? Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Facets, Formatting.None, jsonSettings)).ToString() : "";
+    var facets = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Facets, Formatting.None, jsonSettings));
     var currentProfiles = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.CurrentProfiles));
     var pastProfiles = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.PastProfiles));
   }
@@ -204,6 +204,7 @@
     profiles.CurrentProfiles = @currentProfiles;
     profiles.PastProfiles = @pastProfiles;
     $('.profiles-list-pre').jsonViewer(profiles);
+    $('.facets-list-pre').jsonViewer(@facets);
   }
 
     function fillObject(parent, object) {

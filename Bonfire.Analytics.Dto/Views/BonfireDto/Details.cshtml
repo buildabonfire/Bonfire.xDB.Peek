@@ -11,159 +11,152 @@
   <title>Visitor Details</title>
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
   <link href="/styles/jquery.json-viewer.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" rel="stylesheet">
+  <link href="../../Styles/BonfireDto/bonfireDto.css" rel="stylesheet">
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="/scripts/jquery.json-viewer.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
 </head>
 <body>
-  <style>
-    body {
-      margin-top: 50px;
-    }
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 60px;
-      background: #212121;
-      padding: 10px;
-    }
-
-      .header a {
-        height: 50px;
-      }
-
-        .header a img {
-          max-height: 50px;
-          width: auto;
-        }
-
-      .header h1 {
-        font-size: 1.5rem;
-        margin-right: 50px;
-        color: #fff;
-        padding: 10px;
-        margin: 0;
-        align-self: end;
-      }
-
-    .separator {
-      background-color: #212121;
-    }
-
-    hr {
-      width: calc(100% - 20px);
-      margin: 0 auto;
-      display: block;
-      background-color: white;
-      height: 1px;
-    }
-
-    pre {
-      padding: 10px;
-    }
-
-    nav > .nav.nav-tabs {
-      border: none;
-      color: #fff;
-      background: #212121;
-      border-radius: 0;
-    }
-
-    nav > div a.nav-item.nav-link,
-    nav > div a.nav-item.nav-link.active {
-      border: none;
-      padding: 18px 25px;
-      color: #fff;
-      background: #212121;
-      border-radius: 0;
-    }
-
-      nav > div a.nav-item.nav-link.active:after {
-        content: "";
-        position: relative;
-        bottom: -60px;
-        left: -10%;
-        border: 15px solid transparent;
-        border-top-color: #ee3524;
-      }
-
-    .tab-content {
-      background: #fdfdfd;
-      line-height: 25px;
-      border: 1px solid #ddd;
-      border-top: 5px solid #ee3524;
-      border-bottom: 5px solid #ee3524;
-      padding: 30px 25px;
-    }
-
-    nav > div a.nav-item.nav-link:hover,
-    nav > div a.nav-item.nav-link:focus {
-      border: none;
-      background: #ee3524;
-      color: #fff;
-      border-radius: 0;
-      transition: background 0.20s linear;
-    }
-
-    li.array-li:after {
-      content: "]";
-    }
-  </style>
+  <div class="modal fade" id="cardSelectionModal" tabindex="-1" role="dialog" aria-labelledby="cardSelectionModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <ul class="list-group list-group-flush text-center">
+                  <li class="list-group-item" onclick="handleModalClick(1)">Contact</li>
+                  <li class="list-group-item" onclick="handleModalClick(2)">Visit Data</li>
+                  <li class="list-group-item" onclick="handleModalClick(3)">Pages</li>
+                  <li class="list-group-item" onclick="handleModalClick(4)">Goals</li>
+                  <li class="list-group-item" onclick="handleModalClick(5)">Engagement Plans</li>
+                  <li class="list-group-item" onclick="handleModalClick(6)">Campaigns</li>
+                  <li class="list-group-item" onclick="handleModalClick(7)">Facets</li>
+                  <li class="list-group-item" onclick="handleModalClick(8)">Profiles</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <form id="form1" runat="server">
-    <!------ Include the above in your HEAD tag ---------->
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12">
-          <div class="header">
-            <a href="https://www.buildabonfire.com/">
-              <img src="https://static1.squarespace.com/static/54424858e4b06e8b47dc7c92/t/544249bce4b0f7cb91be3ed4/1557846384729/?format=1500w" alt="" />
-            </a>
-            <h1>xDBPeek by Bonfire</h1>
-          </div>
-          <div class="separator">
-            <hr />
-          </div>
-          <nav>
-            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-              <a class="nav-item nav-link active" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="true">Contact</a>
-              <a class="nav-item nav-link" id="nav-visit-data-tab" data-toggle="tab" href="#nav-visit-data" role="tab" aria-controls="nav-visit-data" aria-selected="false">Visit Data</a>
-              <a class="nav-item nav-link" id="nav-pages-tab" data-toggle="tab" href="#nav-pages" role="tab" aria-controls="nav-pages" aria-selected="false">Pages</a>
-              <a class="nav-item nav-link" id="nav-goals-tab" data-toggle="tab" href="#nav-goals" role="tab" aria-controls="nav-goals" aria-selected="false">Goals</a>
-              <a class="nav-item nav-link" id="nav-engagement-plans-tab" data-toggle="tab" href="#nav-engagement-plans" role="tab" aria-controls="nav-engagement-plans" aria-selected="false">Engagement Plans</a>
-              <a class="nav-item nav-link" id="nav-campaigns-tab" data-toggle="tab" href="#nav-campaigns" role="tab" aria-controls="nav-campaigns" aria-selected="false">Campaigns</a>
-              <a class="nav-item nav-link" id="nav-facets-tab" data-toggle="tab" href="#nav-facets" role="tab" aria-controls="nav-facets" aria-selected="false">Facets</a>
-              <a class="nav-item nav-link" id="nav-profiles-tab" data-toggle="tab" href="#nav-profiles" role="tab" aria-controls="nav-profiles" aria-selected="false">Profiles</a>
+    <div class="content-mobile d-block d-md-none">
+      <div class="header">
+        <a href="https://www.buildabonfire.com/">
+          <img src="https://static1.squarespace.com/static/54424858e4b06e8b47dc7c92/t/544249bce4b0f7cb91be3ed4/1557846384729/?format=1500w" alt="" />
+        </a>
+        <h1>xDBPeek by Bonfire</h1>
+      </div>
+      <section id="slider">
+        <button type="button" class="prev"><i class="fas fa-chevron-left"></i></button>
+        <button type="button" class="next"><i class="fas fa-chevron-right"></i></button>
+        <input type="radio" name="slider" id="s1" checked>
+        <input type="radio" name="slider" id="s2">
+        <input type="radio" name="slider" id="s3">
+        <input type="radio" name="slider" id="s4">
+        <input type="radio" name="slider" id="s5">
+        <input type="radio" name="slider" id="s6">
+        <input type="radio" name="slider" id="s7">
+        <input type="radio" name="slider" id="s8">
+        <label for="s1" id="slide1">
+          <h2>Contact</h2>
+          <pre class="contact-list-pre"></pre>
+        </label>
+        <label for="s2" id="slide2">
+          <h2>Visit Data</h2>
+          <pre class="visit-data-list-pre"></pre>
+        </label>
+        <label for="s3" id="slide3">
+          <h2>Pages</h2>
+          <pre class="pages-list-pre"></pre>
+        </label>
+        <label for="s4" id="slide4">
+          <h2>Goals</h2>
+          <pre class="goals-list-pre"></pre>
+        </label>
+        <label for="s5" id="slide5">
+          <h2>Engagement Plans</h2>
+          <pre class="engagement-plans-list-pre"></pre>
+        </label>
+        <label for="s6" id="slide6">
+          <h2>Campaigns</h2>
+          <pre class="campaigns-list-pre"></pre>
+        </label>
+        <label for="s7" id="slide7">
+          <h2>Facets</h2>
+          <pre class="facets-list-pre"></pre>
+        </label>
+        <label for="s8" id="slide8">
+          <h2>Profiles</h2>
+          <pre class="profiles-list-pre"></pre>
+        </label>
+      </section>
+    </div>
+    <div class="content-desktop d-none d-md-block">
+      <div class="container">
+        <div class="row justify-content-center .d-sm-none .d-md-block">
+          <div class="col-12">
+            <div class="header">
+              <a href="https://www.buildabonfire.com/">
+                <img src="https://static1.squarespace.com/static/54424858e4b06e8b47dc7c92/t/544249bce4b0f7cb91be3ed4/1557846384729/?format=1500w" alt="" />
+              </a>
+              <h1>xDBPeek by Bonfire</h1>
             </div>
-          </nav>
-          <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-              <pre class="contact-list-pre"></pre>
+            <div class="separator">
+              <hr />
             </div>
-            <div class="tab-pane fade" id="nav-visit-data" role="tabpanel" aria-labelledby="nav-visit-data-tab">
-              <pre class="visit-data-list-pre"></pre>
+            <nav>
+              <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="true">Contact</a>
+                <a class="nav-item nav-link" id="nav-visit-data-tab" data-toggle="tab" href="#nav-visit-data" role="tab" aria-controls="nav-visit-data" aria-selected="false">Visit Data</a>
+                <a class="nav-item nav-link" id="nav-pages-tab" data-toggle="tab" href="#nav-pages" role="tab" aria-controls="nav-pages" aria-selected="false">Pages</a>
+                <a class="nav-item nav-link" id="nav-goals-tab" data-toggle="tab" href="#nav-goals" role="tab" aria-controls="nav-goals" aria-selected="false">Goals</a>
+                <a class="nav-item nav-link" id="nav-engagement-plans-tab" data-toggle="tab" href="#nav-engagement-plans" role="tab" aria-controls="nav-engagement-plans" aria-selected="false">Engagement Plans</a>
+                <a class="nav-item nav-link" id="nav-campaigns-tab" data-toggle="tab" href="#nav-campaigns" role="tab" aria-controls="nav-campaigns" aria-selected="false">Campaigns</a>
+                <a class="nav-item nav-link" id="nav-facets-tab" data-toggle="tab" href="#nav-facets" role="tab" aria-controls="nav-facets" aria-selected="false">Facets</a>
+                <a class="nav-item nav-link" id="nav-profiles-tab" data-toggle="tab" href="#nav-profiles" role="tab" aria-controls="nav-profiles" aria-selected="false">Profiles</a>
+              </div>
+            </nav>
+            <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                <pre class="contact-list-pre"></pre>
+              </div>
+              <div class="tab-pane fade" id="nav-visit-data" role="tabpanel" aria-labelledby="nav-visit-data-tab">
+                <pre class="visit-data-list-pre"></pre>
+              </div>
+              <div class="tab-pane fade" id="nav-pages" role="tabpanel" aria-labelledby="nav-pages-tab">
+                <pre class="pages-list-pre"></pre>
+              </div>
+              <div class="tab-pane fade" id="nav-goals" role="tabpanel" aria-labelledby="nav-goals-tab">
+                <pre class="goals-list-pre"></pre>
+              </div>
+              <div class="tab-pane fade" id="nav-engagement-plans" role="tabpanel" aria-labelledby="nav-engagement-plans-tab">
+                <pre class="engagement-plans-list-pre"></pre>
+              </div>
+              <div class="tab-pane fade" id="nav-campaigns" role="tabpanel" aria-labelledby="nav-campaigns-tab">
+                <pre class="campaigns-list-pre"></pre>
+              </div>
+              <div class="tab-pane fade" id="nav-facets" role="tabpanel" aria-labelledby="nav-facets-tab">
+                <pre class="facets-list-pre"></pre>
+              </div>
+              <div class="tab-pane fade" id="nav-profiles" role="tabpanel" aria-labelledby="nav-profiles-tab">
+                <pre class="profiles-list-pre"></pre>
+              </div>
             </div>
-            <div class="tab-pane fade" id="nav-pages" role="tabpanel" aria-labelledby="nav-pages-tab">
-              <pre class="pages-list-pre"></pre>
-            </div>
-            <div class="tab-pane fade" id="nav-goals" role="tabpanel" aria-labelledby="nav-goals-tab">
-              <pre class="goals-list-pre"></pre>
-            </div>
-            <div class="tab-pane fade" id="nav-engagement-plans" role="tabpanel" aria-labelledby="nav-engagement-plans-tab">
-              <pre class="engagement-plans-list-pre"></pre>
-            </div>
-            <div class="tab-pane fade" id="nav-campaigns" role="tabpanel" aria-labelledby="nav-campaigns-tab">
-              <pre class="campaigns-list-pre"></pre>
-            </div>
-            <div class="tab-pane fade" id="nav-facets" role="tabpanel" aria-labelledby="nav-facets-tab">
-              <pre class="facets-list-pre"></pre>
-            </div>
-            <div class="tab-pane fade" id="nav-profiles" role="tabpanel" aria-labelledby="nav-profiles-tab">
-              <pre class="profiles-list-pre"></pre>
-            </div>
-          </div>
 
+          </div>
         </div>
       </div>
     </div>
@@ -174,84 +167,20 @@
       ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
       PreserveReferencesHandling = PreserveReferencesHandling.Objects
     };
-    var contacts = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Contact));
-    var interactions = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Interaction));
-    var pagesViewed = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.PagesViewed));
-    var goalsList = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GoalsList));
-    var pastGoals = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.PastGoals));
-    var engagementPlanStates = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.EngagementPlanStates));
-    var currentCampaign = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.CurrentCampaign));
-    var pastCampaigns = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.PastCampaigns));
-    var facets = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Facets, Formatting.None, jsonSettings));
-    var currentProfiles = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.CurrentProfiles));
-    var pastProfiles = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.PastProfiles));
   }
   <script>
-  function getVisitorDetails() {
-    $('.contact-list-pre').jsonViewer(@contacts);
-    $('.pages-list-pre').jsonViewer(@pagesViewed);
-    var goals = {};
-    goals.CurrentGoals = @goalsList;
-    goals.PastGoals = @pastGoals;
-    $('.goals-list-pre').jsonViewer(goals);
-    $('.visit-data-list-pre').jsonViewer(@interactions);
-    $('.engagement-plans-list-pre').jsonViewer(@engagementPlanStates);
-    var campaigns = {};
-    campaigns.CurrentCampaign = @currentCampaign;
-    campaigns.PastCampaigns = @pastCampaigns;
-    $('.campaigns-list-pre').jsonViewer(campaigns);
-    var profiles = {};
-    profiles.CurrentProfiles = @currentProfiles;
-    profiles.PastProfiles = @pastProfiles;
-    $('.profiles-list-pre').jsonViewer(profiles);
-    $('.facets-list-pre').jsonViewer(@facets);
-  }
-
-    function fillObject(parent, object) {
-      //      parent.innerHTML = JSON.stringify(object, undefined, 2);
-      if (!object)
-        return;
-      renderProperties(parent, object);
-    }
-
-    function renderProperties(parent, object) {
-      for (var key in object) {
-        const newProperty = document.createElement('li');
-        if (typeof object[key] === 'object') {
-          if (!isNaN(key)) {
-            newProperty.classList.add('array-li');
-          }
-          newProperty.innerHTML = !isNaN(key) ? '[' : key;
-          renderSubProperties(newProperty, object[key]);
-        } else {
-          newProperty.innerHTML = key + ': ' + (object[key] || '');
-        }
-        parent.appendChild(newProperty);
-      }
-    }
-
-    function renderSubProperties(parent, object) {
-      for (var key in object) {
-        const subPropertyList = document.createElement('ul');
-        const subProperty = document.createElement('li');
-        if (typeof object[key] === 'object') {
-          if (!isNaN(key)) {
-            subProperty.classList.add('array-li');
-          }
-          subProperty.innerHTML = !isNaN(key) ? '[' : key;
-        } else {
-          subProperty.innerHTML = key + ': ' + (object[key] || '');
-        }
-        subPropertyList.appendChild(subProperty);
-        parent.appendChild(subPropertyList);
-        if (typeof object[key] === 'object')
-          renderSubProperties(subPropertyList, object[key]);
-      }
-    }
-
-    (function () {
-      getVisitorDetails();
-    })();
+    var contacts = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Contact)));
+    var interactions = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Interaction)));
+    var pagesViewed = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.PagesViewed)));
+    var goalsList = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.GoalsList)));
+    var pastGoals = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.PastGoals)));
+    var engagementPlanStates = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.EngagementPlanStates)));
+    var currentCampaign = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.CurrentCampaign)));
+    var pastCampaigns = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.PastCampaigns)));
+    var facets = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Facets, Formatting.None, jsonSettings)));
+    var currentProfiles = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.CurrentProfiles)));
+    var pastProfiles = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.PastProfiles)));
   </script>
+  <script src="../../Scripts/BonfireDto/bonfireDto.js"></script>
 </body>
 </html>

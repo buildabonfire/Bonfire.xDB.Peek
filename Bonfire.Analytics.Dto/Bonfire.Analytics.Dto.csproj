@@ -62,6 +62,8 @@
   <ItemGroup>
     <Content Include="App_Config\Modules\Dto\Bonfire.Analytics.Dto.Pipeline.Initialize.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Scripts\BonfireDto\bonfireDto.js" />
+    <Content Include="Styles\BonfireDto\bonfireDto.css" />
     <Content Include="Views\BonfireDto\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

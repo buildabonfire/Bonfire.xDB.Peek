@@ -59,7 +59,7 @@ namespace Bonfire.Analytics.Dto.Repositories
 
         private string GetChannel(ICampaignActivityDefinition campaign)
         {
-            if (campaign?.ChannelUri == null)
+            if (channelTaxonomyManager == null && campaign?.ChannelUri == null)
             {
                 return null;
             }
@@ -69,7 +69,7 @@ namespace Bonfire.Analytics.Dto.Repositories
 
         private ICampaignActivityDefinition GetCampaignDefinition(Guid campaignId)
         {
-            var campaign = campaignDefinitionManager.Get(campaignId, Context.Language.CultureInfo) ?? campaignDefinitionManager.Get(campaignId, CultureInfo.InvariantCulture);
+            var campaign = this.campaignDefinitionManager.Get(campaignId, Context.Language.CultureInfo) ?? campaignDefinitionManager.Get(campaignId, CultureInfo.InvariantCulture);
             return campaign;
         }
     }

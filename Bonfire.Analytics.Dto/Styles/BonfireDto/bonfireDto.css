@@ -1,4 +1,4 @@
-﻿body.content-desktop {
+﻿body .content-desktop {
     margin-top: 50px;
 }
 
@@ -51,8 +51,6 @@ hr {
 
 pre {
     padding: 10px;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
 }
 
 nav > .nav.nav-tabs {
@@ -127,7 +125,6 @@ li.array-li:after {
         cursor: pointer;
         transition: transform 0.4s ease;
         background-color: #efefef;
-        overflow-y: scroll;
         border-radius: 4px;
     }
 
@@ -154,6 +151,16 @@ li.array-li:after {
     right: 10%;
     top: 12px;
     z-index: 1000;
+}
+#slider button.dropdown {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 45px;
+    color: white;
+    font-size: 10px;
+    z-index: 1000;
+    opacity: 0.5;
 }
 
 #s1:checked ~ #slide6,

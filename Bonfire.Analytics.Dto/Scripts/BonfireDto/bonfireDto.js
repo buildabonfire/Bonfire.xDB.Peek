@@ -61,43 +61,33 @@ function renderSubProperties(parent, object) {
 }
 
 function handleNextClick(e) {
-  console.log(e);
-  const total = document.querySelectorAll('input[type="radio"]');
+  const total = document.querySelectorAll('div.slide');
   const totalLength = total.length;
-  const current = document.querySelector('input[type="radio"]:checked');
+  const current = document.querySelector('div.slide.active');
   const currentId = Number(current.id.substring(1));
-  console.log('clicked: ', currentId);
   let next = -1;
   if (currentId === totalLength) next = 1;
   else next = currentId + 1;
-  console.log(currentId, '->', next)
-  document.querySelector('input#s' + next).click();
-  document.querySelector('button.prev').classList.add('fade-out');
-  setTimeout(function () {
-    document.querySelector('button.prev').classList.remove('fade-out');
-  }, 200);
+  current.classList.remove('active');
+  document.querySelector('.slide#s' + next).classList.add('active');
 }
 
 function handlePrevClick(e) {
   // console.log(e);
-  const total = document.querySelectorAll('input[type="radio"]');
+  const total = document.querySelectorAll('div.slide');
   const totalLength = total.length;
-  const current = document.querySelector('input[type="radio"]:checked');
+  const current = document.querySelector('div.slide.active');
   const currentId = Number(current.id.substring(1));
-  // console.log('clicked: ', currentId);
   let next = -1;
   if (currentId === 1) next = totalLength;
   else next = currentId - 1;
-  // console.log(next, '<-', currentId)
-  document.querySelector('input#s' + next).click();
-  document.querySelector('button.next').classList.add('fade-out');
-  setTimeout(function () {
-    document.querySelector('button.next').classList.remove('fade-out');
-  }, 200);
+  current.classList.remove('active');
+  document.querySelector('.slide#s' + next).classList.add('active');
 }
 
 function handleModalClick(index) {
-  document.querySelector('input#s' + index).click();
+  document.querySelector('div.slide.active').classList.remove('active');
+  document.querySelector('div.slide#s' + index).classList.add('active');
   $('#cardSelectionModal').modal('hide');
 }
 
@@ -111,14 +101,18 @@ function handleModalClick(index) {
   buttonPrev.addEventListener('click', function (event) {
     handlePrevClick(event);
   });
-  const labelHeaders = document.querySelectorAll('label > h2');
+  const buttonDropdown = document.querySelector('button.dropdown');
+  buttonDropdown.addEventListener('click', function(event) {
+      $('#cardSelectionModal').modal('show');
+  });
+  const labelHeaders = document.querySelectorAll('div.slide > h2');
   for (let i = 0; i < labelHeaders.length; i += 1) {
     labelHeaders[i].addEventListener('click', function (event) {
       $('#cardSelectionModal').modal('show');
     })
   }
 
-  const labels = document.querySelectorAll('.content-mobile label');
+  const labels = document.querySelectorAll('.content-mobile div.slide');
   for (let i = 0; i < labels.length; i += 1) {
     let hammerElem = new Hammer(labels[i]);
     hammerElem.on("swipeleft", function (ev) {

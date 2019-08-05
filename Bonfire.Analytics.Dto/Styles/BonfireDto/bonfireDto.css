@@ -147,27 +147,24 @@ body .content-mobile #slider {
         color: white;
     }
 
-#slider button.prev {
-    position: absolute;
-    left: 10px;
-    top: 12px;
-    z-index: 1000;
-}
+    #slider button.prev {
+        position: absolute;
+        left: 10px;
+        top: 12px;
+        z-index: 1000;
+    }
 
-#slider button.next {
-    position: absolute;
-    right: 10px;
-    top: 12px;
-    z-index: 1000;
-}
+    #slider button.next {
+        position: absolute;
+        right: 10px;
+        top: 12px;
+        z-index: 1000;
+    }
 
-#slider button.dropdown {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    left: 50%;
-    top: 45px;
-    color: white;
-    font-size: 10px;
-    z-index: 1000;
-    opacity: 0.5;
-}
+    #slider button.dropdown {
+        position: absolute;
+        right: 10px;
+        top: 0;
+        color: white;
+        font-size: 1.8rem;
+    }

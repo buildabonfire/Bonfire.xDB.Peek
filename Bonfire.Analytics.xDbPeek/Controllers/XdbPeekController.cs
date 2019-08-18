@@ -23,7 +23,7 @@ namespace Bonfire.Analytics.XdbPeek.Controllers
                 model = contactRepository.GetTrackerDto();
                 return View(model);
             }
-            catch (Exception ex)
+            catch
             {
                 return View(model);
             }

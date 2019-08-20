@@ -68,7 +68,7 @@ namespace Bonfire.Analytics.Dto.Repositories
                 BrowserInfo = currentInteraction.BrowserInfo,
                 CampaignId = currentInteraction.CampaignId,
                 ContactId = currentInteraction.ContactId,
-                ChannelId = currentInteraction.ChannelId,
+                ChannelName = Context.Database.GetItem(ID.Parse(currentInteraction.ChannelId)).Name,
                 ContactVisitIndex = currentInteraction.ContactVisitIndex,
                 CustomValues = currentInteraction.CustomValues,
                 DeviceId = currentInteraction.DeviceId,
@@ -163,7 +163,7 @@ namespace Bonfire.Analytics.Dto.Repositories
                 Scores = profile.Scores,
                 PatternId = profile.PatternId,
                 ProfileName = Context.Database.GetItem(profile.Id).Name,
-                PatterneName = (!ID.IsNullOrEmpty(profile.PatternId)) ? Context.Database.GetItem(profile.PatternId).Name : ""
+                PatternName = (!ID.IsNullOrEmpty(profile.PatternId)) ? Context.Database.GetItem(profile.PatternId).Name : ""
             };
         }
 

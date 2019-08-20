@@ -15,6 +15,10 @@
   profiles.CurrentProfiles = currentProfiles;
   profiles.PastProfiles = pastProfiles;
   $('.profiles-list-pre').jsonViewer(profiles);
+  console.lo(facets);
+  if (facets.xObject) {
+    delete facets.xObject;
+  }
   $('.facets-list-pre').jsonViewer(facets);
 }
 

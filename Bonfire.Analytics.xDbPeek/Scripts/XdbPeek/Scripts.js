@@ -15,6 +15,15 @@
   profiles.CurrentProfiles = currentProfiles;
   profiles.PastProfiles = pastProfiles;
   $('.profiles-list-pre').jsonViewer(profiles);
+  for (let i = 0; i < facets.length; i += 1) {
+    let facet = facets[i];
+    if (facet.Value && facet.Value.XObject) {
+      delete facet.Value.XObject;
+    }
+  }
+//  if (membership[0] && membership[0].Value.XObject) {
+//    delete membership[0].Value.XObject;
+//  }
   $('.facets-list-pre').jsonViewer(facets);
 }
 

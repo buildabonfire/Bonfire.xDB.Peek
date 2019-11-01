@@ -34,7 +34,7 @@ namespace Bonfire.Analytics.XdbPeek.Models
         public double Total { get; set; }
         public IEnumerable<KeyValuePair<ID, double>> Scores { get; set; }
         public IEnumerable<KeyValuePair<string, double>> StringScore { get; set; }
-        public string PatterneName { get; set; }
+        public string PatternName { get; set; }
         public ID PatternId { get; set; }
     }
 
@@ -51,7 +51,7 @@ namespace Bonfire.Analytics.XdbPeek.Models
 
         public Guid ContactId { get; set; }
 
-        public Guid ChannelId { get; set; }
+        public string ChannelName { get; set; }
 
         public int ContactVisitIndex { get; set; }
 

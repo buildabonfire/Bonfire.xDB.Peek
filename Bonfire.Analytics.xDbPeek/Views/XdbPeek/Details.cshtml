@@ -2,7 +2,6 @@
 @model Bonfire.Analytics.XdbPeek.Models.TrackerDto
 
 <!DOCTYPE html>
-
 <html>
 <head>
   <meta name="viewport" content="width=device-width" />
@@ -94,29 +93,31 @@
     </div>
     <div class="content-desktop d-none d-md-block">
       <div class="container">
-        <div class="row justify-content-center .d-sm-none .d-md-block">
+        <div class="row d-sm-none d-md-block">
           <div class="col-12">
-            <div class="header">
-              <a href="https://www.buildabonfire.com/">
-                <img src="https://static1.squarespace.com/static/54424858e4b06e8b47dc7c92/t/544249bce4b0f7cb91be3ed4/1557846384729/?format=1500w" alt="" />
-              </a>
-              <h1>xDBPeek by Bonfire</h1>
-            </div>
-            <div class="separator">
-              <hr />
-            </div>
-            <nav>
-              <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="true">Contact</a>
-                <a class="nav-item nav-link" id="nav-visit-data-tab" data-toggle="tab" href="#nav-visit-data" role="tab" aria-controls="nav-visit-data" aria-selected="false">Visit Data</a>
-                <a class="nav-item nav-link" id="nav-pages-tab" data-toggle="tab" href="#nav-pages" role="tab" aria-controls="nav-pages" aria-selected="false">Pages</a>
-                <a class="nav-item nav-link" id="nav-goals-tab" data-toggle="tab" href="#nav-goals" role="tab" aria-controls="nav-goals" aria-selected="false">Goals</a>
-                <a class="nav-item nav-link" id="nav-engagement-plans-tab" data-toggle="tab" href="#nav-engagement-plans" role="tab" aria-controls="nav-engagement-plans" aria-selected="false">Engagement Plans</a>
-                <a class="nav-item nav-link" id="nav-campaigns-tab" data-toggle="tab" href="#nav-campaigns" role="tab" aria-controls="nav-campaigns" aria-selected="false">Campaigns</a>
-                <a class="nav-item nav-link" id="nav-facets-tab" data-toggle="tab" href="#nav-facets" role="tab" aria-controls="nav-facets" aria-selected="false">Facets</a>
-                <a class="nav-item nav-link" id="nav-profiles-tab" data-toggle="tab" href="#nav-profiles" role="tab" aria-controls="nav-profiles" aria-selected="false">Profiles</a>
+            <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+              <div class="header">
+                <a href="https://www.buildabonfire.com/">
+                  <img src="https://static1.squarespace.com/static/54424858e4b06e8b47dc7c92/t/544249bce4b0f7cb91be3ed4/1557846384729/?format=1500w" alt="" />
+                </a>
+                <h1>xDBPeek by Bonfire</h1>
               </div>
-            </nav>
+              <div class="separator">
+                <hr />
+              </div>
+              <nav>
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                  <a class="nav-item nav-link active" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="true">Contact</a>
+                  <a class="nav-item nav-link" id="nav-visit-data-tab" data-toggle="tab" href="#nav-visit-data" role="tab" aria-controls="nav-visit-data" aria-selected="false">Visit Data</a>
+                  <a class="nav-item nav-link" id="nav-pages-tab" data-toggle="tab" href="#nav-pages" role="tab" aria-controls="nav-pages" aria-selected="false">Pages</a>
+                  <a class="nav-item nav-link" id="nav-goals-tab" data-toggle="tab" href="#nav-goals" role="tab" aria-controls="nav-goals" aria-selected="false">Goals</a>
+                  <a class="nav-item nav-link" id="nav-engagement-plans-tab" data-toggle="tab" href="#nav-engagement-plans" role="tab" aria-controls="nav-engagement-plans" aria-selected="false">Engagement Plans</a>
+                  <a class="nav-item nav-link" id="nav-campaigns-tab" data-toggle="tab" href="#nav-campaigns" role="tab" aria-controls="nav-campaigns" aria-selected="false">Campaigns</a>
+                  <a class="nav-item nav-link" id="nav-facets-tab" data-toggle="tab" href="#nav-facets" role="tab" aria-controls="nav-facets" aria-selected="false">Facets</a>
+                  <a class="nav-item nav-link" id="nav-profiles-tab" data-toggle="tab" href="#nav-profiles" role="tab" aria-controls="nav-profiles" aria-selected="false">Profiles</a>
+                </div>
+              </nav>
+            </header>
             <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
               <div class="tab-pane fade show active" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                 <pre class="contact-list-pre"></pre>
@@ -143,7 +144,6 @@
                 <pre class="profiles-list-pre"></pre>
               </div>
             </div>
-
           </div>
         </div>
       </div>

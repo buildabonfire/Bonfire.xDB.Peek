@@ -1,22 +1,27 @@
-# Bonfire.Analytics.Dto
-This code is currently written for Sitecore 9.1 Initial Release. There is a tag for version 8.2 update 4 and 9.0.
+# xDB Peek
+The master branch is on 9.2, but there is a release branch for each version of Sitecore 9.x. I would like to get the 8.2 branch updated. But it is so far off from 9.x, it a hard lift to maintain both.
 
 ## Use
-The analytics DTO exposes the current user's profile data in a JSON format.
+The xDB Peek exposes the current user's profile data in a JSON format and UI.
 
 ## Api
 There are two APIs available:
 
-#### VisitorDetails
+## UI
+Just visit `VisitorDetails`
+
+![](https://www.waitingimpatiently.com/content/images/2019/08/image.png)
+
+#### VisitorDetails JSON
 **Route**: `/Apis/v1/VisitorDetails`
 Outputs the aggregation of the user's profile.
 
-#### 
+####  Clear the session
 **Route**: `/Apis/v1/ClearVisitorSession`
 Clears the user's session is Sitecore. This has the same effect as timing the user's sessions out. This causes the session to be written to Mongo.
 
 ## JSON
-An example of the output https://gist.github.com/dnstommy/ccd686f785a14096ef8305789f8a3802
+An example of the output https://gist.github.com/dnstommy/8f8c1d644f0bc4950869375e5141e0b5
 
 ## Deploy
 Pull the version from releases that matches your version. Install as an update package. 

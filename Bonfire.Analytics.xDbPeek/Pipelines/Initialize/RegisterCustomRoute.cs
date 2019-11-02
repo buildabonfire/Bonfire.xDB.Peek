@@ -15,20 +15,17 @@ namespace Bonfire.Analytics.XdbPeek.Pipelines.Initialize
             RouteTable.Routes.MapRoute(
                 "bonfire-VisitorData",
                 BaseRoute + ApiVersion + "/VisitorDetails",
-                new { controller = "Visitor", action = "VisitorDetailsJson" },
-                new[] { "Bonfire.Analytics.Dto.Controllers" });
+                new { controller = "Visitor", action = "VisitorDetailsJson" });
 
             RouteTable.Routes.MapRoute(
                 "bonfire-ClearVisitorSession",
                 BaseRoute + ApiVersion + "/ClearVisitorSession",
-                new { controller = "Visitor", action = "ClearVisitorSession" },
-                new[] { "Bonfire.Analytics.Dto.Controllers" });
+                new { controller = "Visitor", action = "ClearVisitorSession" });
 
             RouteTable.Routes.MapRoute(
                 "bonfire-VisitorDetails",
                 "VisitorDetails",
-                new { controller = "XdbPeek", action = "Details" },
-                new[] { "Bonfire.Analytics.Dto.Controllers" });
+                new { controller = "XdbPeek", action = "Details" });
         }
     }
 }

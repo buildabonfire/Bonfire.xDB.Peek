@@ -62,7 +62,9 @@
   <ItemGroup>
     <Content Include="App_Config\Modules\Dto\Bonfire.Analytics.XdbPeek.Pipeline.Initialize.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Scripts\XdbPeek\jquery.json-viewer.js" />
     <Content Include="Scripts\XdbPeek\Scripts.js" />
+    <Content Include="Styles\XdbPeek\jquery.json-viewer.css" />
     <Content Include="Styles\XdbPeek\Styles.css" />
     <Content Include="Views\XdbPeek\Details.cshtml" />
     <None Include="Web.Debug.config">

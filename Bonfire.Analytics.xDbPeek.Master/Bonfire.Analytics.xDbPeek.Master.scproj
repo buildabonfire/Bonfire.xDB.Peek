@@ -20,8 +20,8 @@
     <SitecoreDatabase>master</SitecoreDatabase>
     <AssemblyStatus>Include</AssemblyStatus>
     <CompactSitecoreItemsInProjectFile>False</CompactSitecoreItemsInProjectFile>
-    <SourceWebVirtualPath>/Bonfire.Analytics.xDbPeek.csproj</SourceWebVirtualPath>
-    <SourceWebProject>{6f8177e1-66f9-4ea9-85e7-73687a6b467c}|Bonfire.Analytics.xDbPeek\Bonfire.Analytics.xDbPeek.csproj</SourceWebProject>
+    <SourceWebVirtualPath>/Bonfire.Analytics.XdbPeek.csproj</SourceWebVirtualPath>
+    <SourceWebProject>{6f8177e1-66f9-4ea9-85e7-73687a6b467c}|Bonfire.Analytics.xDbPeek\Bonfire.Analytics.XdbPeek.csproj</SourceWebProject>
     <SourceWebPhysicalPath>..\Bonfire.Analytics.xDbPeek</SourceWebPhysicalPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -38,6 +38,8 @@
     <SeperateFilesAndItems>False</SeperateFilesAndItems>
     <PackageExcludeCode>False</PackageExcludeCode>
     <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
+    <EnableValidations>False</EnableValidations>
+    <ValidationSettingsFilePath>.\Bonfire.Analytics.XdbPeek.Master_Debug.xml</ValidationSettingsFilePath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>false</DebugSymbols>
@@ -63,9 +65,9 @@
     </AssemblyAttributes>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bonfire.Analytics.xDbPeek\Bonfire.Analytics.xDbPeek.csproj">
+    <ProjectReference Include="..\Bonfire.Analytics.xDbPeek\Bonfire.Analytics.XdbPeek.csproj">
       <Project>{6f8177e1-66f9-4ea9-85e7-73687a6b467c}</Project>
-      <Name>Bonfire.Analytics.xDbPeek</Name>
+      <Name>Bonfire.Analytics.XdbPeek</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

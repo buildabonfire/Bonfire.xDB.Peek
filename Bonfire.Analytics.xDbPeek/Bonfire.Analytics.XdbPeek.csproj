@@ -102,6 +102,7 @@
     <Compile Include="Repositories\IEventRepository.cs" />
     <Compile Include="Repositories\IFacetRepository.cs" />
     <Compile Include="Serialization\JsonNet.cs" />
+    <Compile Include="Serialization\JsonSettings.cs" />
     <Compile Include="ServiceConfigurator\DiConfigurator.cs" />
   </ItemGroup>
   <ItemGroup>

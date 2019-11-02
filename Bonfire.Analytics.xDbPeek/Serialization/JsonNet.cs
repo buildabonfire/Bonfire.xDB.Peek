@@ -31,7 +31,6 @@ namespace Bonfire.Analytics.XdbPeek.Serialization
         {
             var jsonResolver = new PropertyRenameAndIgnoreSerializerContractResolver();
             jsonResolver.IgnoreProperty(typeof(XdbExtensible), "XObject");
-            //jsonResolver.RenameProperty(typeof(Person), "FirstName", "firstName");
 
             var serializerSettings = new JsonSerializerSettings();
             serializerSettings.ContractResolver = jsonResolver;

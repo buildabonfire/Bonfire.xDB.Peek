@@ -59,7 +59,7 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
 
         private string GetChannel(ICampaignActivityDefinition campaign)
         {
-            if (channelTaxonomyManager == null && campaign?.ChannelUri == null)
+            if (channelTaxonomyManager == null || campaign?.ChannelUri == null)
             {
                 return null;
             }

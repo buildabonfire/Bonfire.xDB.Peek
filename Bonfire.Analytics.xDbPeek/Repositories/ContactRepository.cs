@@ -22,7 +22,7 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
         private readonly IContactIdentificationRepository contactIdentificationRepository;
         private readonly IFacetRepository facetRepository;
         private readonly IEventRepository eventRepository;
-        private readonly IEngagementPlanStateRepository engagementPlanStateRepository;
+        private readonly IListsAutomationsRepository listsAutomationsRepository;
         private readonly ICampaignRepository campaignRepository;
 
         public IDefinitionManager<IAutomationPlanDefinition> AutomationPlanDefinitionManager { get; }
@@ -33,7 +33,7 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
             contactIdentificationRepository = new ContactIdentificationRepository();
             facetRepository = new FacetRepository();
             eventRepository = new EventRepository();
-            engagementPlanStateRepository = new EngagementPlanStateRepository();
+            listsAutomationsRepository = new ListsAutomationsRepository();
             campaignRepository = new CampaignRepository();
         }
 
@@ -51,7 +51,7 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
                 PagesViewed = LoadPages(),
                 GoalsList = eventRepository.GetCurrentGoals().ToList(),
                 PastGoals = eventRepository.GetHistoricGoals().ToList(),
-                EngagementPlanStates = engagementPlanStateRepository.GetCurrent(),
+                ListsAutomations = listsAutomationsRepository.GetCurrent(),
                 CurrentCampaign = campaignRepository.GetCurrent(),
                 PastCampaigns = campaignRepository.GetHistoric(),
                 CurrentProfiles = GetCurrentProfiles(),
@@ -59,6 +59,12 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
             };
 
             return trackerDto;
+        }
+
+        public string GetListName(Guid id)
+        {
+            var list = Sitecore.Context.Database.GetItem(new ID(id));
+            return list != null ? Sitecore.Context.Database.GetItem(new ID(id)).DisplayName : string.Empty;
         }
 
         public Interactions GetInteractions(CurrentInteraction currentInteraction)
@@ -94,28 +100,28 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
 
             var contactReference = this.contactIdentificationRepository.GetContactReference();
 
-            
-                using (var client = this.contactIdentificationRepository.CreateContext())
+
+            using (var client = this.contactIdentificationRepository.CreateContext())
+            {
+                var contact = client.Get(contactReference, new ContactExpandOptions(facetList.ToArray()));
+
+                var thing = JsonConvert.SerializeObject(contact);
+
+                var serializerSettings = new JsonSerializerSettings
                 {
-                    var contact = client.Get(contactReference, new ContactExpandOptions(facetList.ToArray()));
+                    ContractResolver = new XdbJsonContractResolver(client.Model,
+                        serializeFacets: true,
+                        serializeContactInteractions: true),
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                    DefaultValueHandling = DefaultValueHandling.Ignore,
+                    Formatting = Formatting.None
+                };
 
-                    var thing = JsonConvert.SerializeObject(contact);
-
-                    var serializerSettings = new JsonSerializerSettings
-                    {
-                        ContractResolver = new XdbJsonContractResolver(client.Model,
-                            serializeFacets: true,
-                            serializeContactInteractions: true),
-                        DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                        DefaultValueHandling = DefaultValueHandling.Ignore,
-                        Formatting = Formatting.None
-                    };
-
-                    return contact;
+                return contact;
             }
-          
+
         }
-    
+
 
         public string GetCampaign(CurrentInteraction currentInteraction)
         {
@@ -149,9 +155,9 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
                 //pageName.Substring(0, pageName.IndexOf("/") + 1) +
                 pageName = "..." + pageName.Substring(pageName.LastIndexOf("/", StringComparison.Ordinal));
             }
-            return (pageName.Length < 27) ? $"{pageName} ({(p.Duration/1000.0).ToString("f2")}s)"
+            return (pageName.Length < 27) ? $"{pageName} ({(p.Duration / 1000.0).ToString("f2")}s)"
                 :
-                $"{pageName.Substring(0, 26)}... ({(p.Duration/1000.0).ToString("f2")}s)";
+                $"{pageName.Substring(0, 26)}... ({(p.Duration / 1000.0).ToString("f2")}s)";
         }
 
         private static ExtraBehaviorProfileContext CreateExtraBehaviorProfileContext(IBehaviorProfileContext profile)

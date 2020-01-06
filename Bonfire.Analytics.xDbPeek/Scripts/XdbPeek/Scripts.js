@@ -6,7 +6,6 @@
   goals.PastGoals = pastGoals;
   $('.goals-list-pre').jsonViewer(goals);
   $('.visit-data-list-pre').jsonViewer(interactions);
-  $('.engagement-plans-list-pre').jsonViewer(engagementPlanStates);
   var campaigns = {};
   campaigns.CurrentCampaign = currentCampaign;
   campaigns.PastCampaigns = pastCampaigns;
@@ -15,15 +14,22 @@
   profiles.CurrentProfiles = currentProfiles;
   profiles.PastProfiles = pastProfiles;
   $('.profiles-list-pre').jsonViewer(profiles);
+  var lists = {};
+  lists.Automations = listsAutomations;
   for (let i = 0; i < facets.length; i += 1) {
     let facet = facets[i];
     if (facet.Value && facet.Value.XObject) {
-      delete facet.Value.XObject;
+      facets.splice(i, 1);
+    }
+    if (facet.Key === 'ListSubscriptions' && facet.Value && facet.Value.Subscriptions) {
+      lists.Lists = facet.Value.Subscriptions;
+      facets.splice(i, 1);
     }
   }
 //  if (membership[0] && membership[0].Value.XObject) {
 //    delete membership[0].Value.XObject;
 //  }
+  $('.lists-automations-list-pre').jsonViewer(lists);
   $('.facets-list-pre').jsonViewer(facets);
 }
 

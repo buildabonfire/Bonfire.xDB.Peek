@@ -82,7 +82,7 @@
     <Compile Include="Controllers\VisitorController.cs" />
     <Compile Include="Extensions\PropertyRenameAndIgnoreSerializerContractResolver.cs" />
     <Compile Include="Models\Campaign.cs" />
-    <Compile Include="Models\EngagementPlanState.cs" />
+    <Compile Include="Models\ListsAutomations.cs" />
     <Compile Include="Models\FacetModel.cs" />
     <Compile Include="Models\FacetModelModel.cs" />
     <Compile Include="Models\PageEvent.cs" />
@@ -94,13 +94,13 @@
     <Compile Include="Models\TrackerDto.cs" />
     <Compile Include="Pipelines\Initialize\RegisterCustomRoute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\EngagementPlanStateRepository.cs" />
+    <Compile Include="Repositories\ListsAutomationsRepository.cs" />
     <Compile Include="Repositories\EventRepository.cs" />
     <Compile Include="Repositories\FacetRepository.cs" />
     <Compile Include="Repositories\ICampaignRepository.cs" />
     <Compile Include="Repositories\IContactIdentificationRepository.cs" />
     <Compile Include="Repositories\IContactRepository.cs" />
-    <Compile Include="Repositories\IEngagementPlanStateRepository.cs" />
+    <Compile Include="Repositories\IListsAutomationsRepository.cs" />
     <Compile Include="Repositories\IEventRepository.cs" />
     <Compile Include="Repositories\IFacetRepository.cs" />
     <Compile Include="Serialization\JsonNet.cs" />

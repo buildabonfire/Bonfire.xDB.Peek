@@ -75,8 +75,8 @@
           <pre class="goals-list-pre"></pre>
         </div>
         <div class="slide" id="s5">
-          <h2>Engagement Plans</h2>
-          <pre class="engagement-plans-list-pre"></pre>
+          <h2>Lists & Automations</h2>
+          <pre class="lists-automations-list-pre"></pre>
         </div>
         <div class="slide" id="s6">
           <h2>Campaigns</h2>
@@ -112,7 +112,7 @@
                   <a class="nav-item nav-link" id="nav-visit-data-tab" data-toggle="tab" href="#nav-visit-data" role="tab" aria-controls="nav-visit-data" aria-selected="false">Visit Data</a>
                   <a class="nav-item nav-link" id="nav-pages-tab" data-toggle="tab" href="#nav-pages" role="tab" aria-controls="nav-pages" aria-selected="false">Pages</a>
                   <a class="nav-item nav-link" id="nav-goals-tab" data-toggle="tab" href="#nav-goals" role="tab" aria-controls="nav-goals" aria-selected="false">Goals</a>
-                  <a class="nav-item nav-link" id="nav-engagement-plans-tab" data-toggle="tab" href="#nav-engagement-plans" role="tab" aria-controls="nav-engagement-plans" aria-selected="false">Engagement Plans</a>
+                  <a class="nav-item nav-link" id="nav-lists-automations-tab" data-toggle="tab" href="#nav-lists-automations" role="tab" aria-controls="nav-lists-automations" aria-selected="false">Lists & Automations</a>
                   <a class="nav-item nav-link" id="nav-campaigns-tab" data-toggle="tab" href="#nav-campaigns" role="tab" aria-controls="nav-campaigns" aria-selected="false">Campaigns</a>
                   <a class="nav-item nav-link" id="nav-facets-tab" data-toggle="tab" href="#nav-facets" role="tab" aria-controls="nav-facets" aria-selected="false">Facets</a>
                   <a class="nav-item nav-link" id="nav-profiles-tab" data-toggle="tab" href="#nav-profiles" role="tab" aria-controls="nav-profiles" aria-selected="false">Profiles</a>
@@ -132,8 +132,8 @@
               <div class="tab-pane fade" id="nav-goals" role="tabpanel" aria-labelledby="nav-goals-tab">
                 <pre class="goals-list-pre"></pre>
               </div>
-              <div class="tab-pane fade" id="nav-engagement-plans" role="tabpanel" aria-labelledby="nav-engagement-plans-tab">
-                <pre class="engagement-plans-list-pre"></pre>
+              <div class="tab-pane fade" id="nav-lists-automations" role="tabpanel" aria-labelledby="nav-lists-automation-tab">
+                <pre class="lists-automations-list-pre"></pre>
               </div>
               <div class="tab-pane fade" id="nav-campaigns" role="tabpanel" aria-labelledby="nav-campaigns-tab">
                 <pre class="campaigns-list-pre"></pre>
@@ -157,7 +157,7 @@
       var pagesViewed = @Html.Raw(JsonConvert.SerializeObject(Model.PagesViewed, Formatting.None, JsonSettings.NoXobjectSettings()));
       var goalsList = @Html.Raw(JsonConvert.SerializeObject(Model.GoalsList, Formatting.None, JsonSettings.NoXobjectSettings()));
       var pastGoals = @Html.Raw(JsonConvert.SerializeObject(Model.PastGoals, Formatting.None, JsonSettings.NoXobjectSettings()));
-      var engagementPlanStates = @Html.Raw(JsonConvert.SerializeObject(Model.EngagementPlanStates, Formatting.None, JsonSettings.NoXobjectSettings()));
+      var listsAutomations = @Html.Raw(JsonConvert.SerializeObject(Model.ListsAutomations, Formatting.None, JsonSettings.NoXobjectSettings()));
       var currentCampaign = @Html.Raw(JsonConvert.SerializeObject(Model.CurrentCampaign, Formatting.None, JsonSettings.NoXobjectSettings()));
       var pastCampaigns = @Html.Raw(JsonConvert.SerializeObject(Model.PastCampaigns, Formatting.None, JsonSettings.NoXobjectSettings()));
       var facets = @Html.Raw(JsonConvert.SerializeObject(Model.Facets, Formatting.None, JsonSettings.NoXobjectSettings()));

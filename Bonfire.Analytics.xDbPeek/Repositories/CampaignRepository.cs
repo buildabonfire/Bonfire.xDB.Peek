@@ -59,12 +59,21 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
 
         private string GetChannel(ICampaignActivityDefinition campaign)
         {
-            if (channelTaxonomyManager == null || campaign?.ChannelUri == null)
+            if (channelTaxonomyManager == null || campaign?.ChannelUri == null || Context.Language?.CultureInfo == null)
             {
                 return null;
             }
-            var channel = channelTaxonomyManager.GetChannel(campaign.ChannelUri, Context.Language.CultureInfo);
-            return channel == null ? null : channelTaxonomyManager.GetFullName(channel.Uri, "/");
+
+            try
+            {
+                var channel = channelTaxonomyManager.GetChannel(campaign.ChannelUri, Context.Language.CultureInfo);
+                return channel == null ? null : channelTaxonomyManager.GetFullName(channel.Uri, "/");
+            }
+            catch
+            {
+                return string.Empty;
+            }
+            
         }
 
         private ICampaignActivityDefinition GetCampaignDefinition(Guid campaignId)

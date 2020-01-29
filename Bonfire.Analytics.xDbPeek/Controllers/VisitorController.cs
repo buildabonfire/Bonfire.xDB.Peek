@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Bonfire.Analytics.XdbPeek.Repositories;
 using Bonfire.Analytics.XdbPeek.Serialization;
 
@@ -27,6 +28,13 @@ namespace Bonfire.Analytics.XdbPeek.Controllers
             Session.Abandon();
 
             return Json("Done", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetListName(Guid id)
+        {
+            var response = contactRepository.GetListName(id);
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
     }
 }

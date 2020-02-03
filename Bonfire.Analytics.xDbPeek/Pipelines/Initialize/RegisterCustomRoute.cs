@@ -23,6 +23,11 @@ namespace Bonfire.Analytics.XdbPeek.Pipelines.Initialize
                 new { controller = "Visitor", action = "ClearVisitorSession" });
 
             RouteTable.Routes.MapRoute(
+                "bonfire-MakeHuman",
+                BaseRoute + ApiVersion + "/MakeSessionHuman",
+                new { controller = "Visitor", action = "SetVisitHuman" });
+
+            RouteTable.Routes.MapRoute(
                 "bonfire-GetListName",
                 BaseRoute + ApiVersion + "/GetListName",
                 new { controller = "Visitor", action = "GetListName" });

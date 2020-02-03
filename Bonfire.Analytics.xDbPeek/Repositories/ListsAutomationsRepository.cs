@@ -12,29 +12,29 @@ using Sitecore.Xdb.MarketingAutomation.Tracking.Extensions;
 
 namespace Bonfire.Analytics.XdbPeek.Repositories
 {
-    public class EngagementPlanStateRepository : IEngagementPlanStateRepository
+    public class ListsAutomationsRepository : IListsAutomationsRepository
     {
         private IDefinitionManager<IAutomationPlanDefinition> AutomationPlanDefinitionManager { get; }
 
-        public EngagementPlanStateRepository()
+        public ListsAutomationsRepository()
         {
             this.AutomationPlanDefinitionManager = DependencyResolver.Current.GetService<IDefinitionManager<IAutomationPlanDefinition>>();
         }
 
-        public IEnumerable<EngagementPlanState> GetCurrent()
+        public IEnumerable<ListsAutomations> GetCurrent()
         {
             var plans = Tracker.Current?.Contact?.GetPlanEnrollmentCache();
             var enrollments = plans?.ActivityEnrollments;
 
-            return enrollments?.Select(this.CreateEngagementPlanState).ToArray() ?? Enumerable.Empty<EngagementPlanState>();
+            return enrollments?.Select(this.CreateEngagementPlanState).ToArray() ?? Enumerable.Empty<ListsAutomations>();
         }
 
-        private EngagementPlanState CreateEngagementPlanState(AutomationPlanActivityEnrollmentCacheEntry enrollment)
+        private ListsAutomations CreateEngagementPlanState(AutomationPlanActivityEnrollmentCacheEntry enrollment)
         {
             var definition = this.AutomationPlanDefinitionManager.Get(enrollment.AutomationPlanDefinitionId, Context.Language.CultureInfo) ?? this.AutomationPlanDefinitionManager.Get(enrollment.AutomationPlanDefinitionId, CultureInfo.InvariantCulture);
             var activity = definition?.GetActivity(enrollment.ActivityId);
 
-            return new EngagementPlanState
+            return new ListsAutomations
             {
                 EngagementPlanTitle = definition?.Name,
                 Title = activity?.Parameters["Name"]?.ToString() ?? string.Empty,

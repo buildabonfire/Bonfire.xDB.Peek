@@ -1,6 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Bonfire.Analytics.XdbPeek.Repositories;
 using Bonfire.Analytics.XdbPeek.Serialization;
+using Sitecore.Analytics;
 
 namespace Bonfire.Analytics.XdbPeek.Controllers
 {
@@ -27,6 +29,21 @@ namespace Bonfire.Analytics.XdbPeek.Controllers
             Session.Abandon();
 
             return Json("Done", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult SetVisitHuman()
+        {
+            Tracker.Current.Session.SetClassification(0, 0, true);
+
+            return Json("Done", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetListName(Guid id)
+        {
+            var response = contactRepository.GetListName(id);
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
     }
 }

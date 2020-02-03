@@ -23,7 +23,7 @@ namespace Bonfire.Analytics.XdbPeek.Models
         public List<KeyValuePair<string, Sitecore.XConnect.Facet>> Facets { get; set; }
         public List<PatternProfile> CurrentProfiles { get; set; }
         public IEnumerable<ExtraBehaviorProfileContext> PastProfiles { get; set; }
-        public IEnumerable<EngagementPlanState> EngagementPlanStates { get; set; }
+        public IEnumerable<ListsAutomations> ListsAutomations { get; set; }
     }
 
     public class ExtraBehaviorProfileContext

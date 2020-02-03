@@ -3,8 +3,8 @@ using Bonfire.Analytics.XdbPeek.Models;
 
 namespace Bonfire.Analytics.XdbPeek.Repositories
 {
-    public interface IEngagementPlanStateRepository
+    public interface IListsAutomationsRepository
     {
-        IEnumerable<EngagementPlanState> GetCurrent();
+        IEnumerable<ListsAutomations> GetCurrent();
     }
 }

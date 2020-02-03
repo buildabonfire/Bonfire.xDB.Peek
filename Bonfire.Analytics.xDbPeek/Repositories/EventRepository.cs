@@ -25,6 +25,9 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
             var keyBehaviourCache = Tracker.Current.Contact.KeyBehaviorCache;
             foreach (var cachedGoal in keyBehaviourCache.Goals)
             {
+                if (cachedGoal.Id == Guid.Empty)
+                    continue;
+
                 var goal = GetGoalDefinition(cachedGoal.Id);
 
                 yield return new PageEvent

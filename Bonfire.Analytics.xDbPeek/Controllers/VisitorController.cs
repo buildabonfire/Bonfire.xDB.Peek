@@ -36,7 +36,15 @@ namespace Bonfire.Analytics.XdbPeek.Controllers
         {
             Tracker.Current.Session.SetClassification(0, 0, true);
 
-            return Json("Done", JsonRequestBehavior.AllowGet);
+            return Json("Human", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult SetVisitRobot()
+        {
+            Tracker.Current.Session.SetClassification(925, 0, true);
+
+            return Json("Robot", JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

@@ -55,7 +55,8 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
                 CurrentCampaign = campaignRepository.GetCurrent(),
                 PastCampaigns = campaignRepository.GetHistoric(),
                 CurrentProfiles = GetCurrentProfiles(),
-                PastProfiles = GetPastProfiles()
+                PastProfiles = GetPastProfiles(),
+                Classification = currentTracker.Session.Contact.System.Classification
             };
 
             return trackerDto;

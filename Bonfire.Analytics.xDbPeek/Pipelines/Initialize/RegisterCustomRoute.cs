@@ -28,6 +28,11 @@ namespace Bonfire.Analytics.XdbPeek.Pipelines.Initialize
                 new { controller = "Visitor", action = "SetVisitHuman" });
 
             RouteTable.Routes.MapRoute(
+                "bonfire-MakeRobot",
+                BaseRoute + ApiVersion + "/MakeSessionRobot",
+                new { controller = "Visitor", action = "SetVisitRobot" });
+
+            RouteTable.Routes.MapRoute(
                 "bonfire-GetListName",
                 BaseRoute + ApiVersion + "/GetListName",
                 new { controller = "Visitor", action = "GetListName" });

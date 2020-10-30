@@ -18,7 +18,8 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
 
         public ListsAutomationsRepository()
         {
-            this.AutomationPlanDefinitionManager = DependencyResolver.Current.GetService<IDefinitionManager<IAutomationPlanDefinition>>();
+            AutomationPlanDefinitionManager =
+                DependencyResolver.Current.GetService<IDefinitionManager<IAutomationPlanDefinition>>();
         }
 
         public IEnumerable<ListsAutomations> GetCurrent()
@@ -26,20 +27,24 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
             var plans = Tracker.Current?.Contact?.GetPlanEnrollmentCache();
             var enrollments = plans?.ActivityEnrollments;
 
-            return enrollments?.Select(this.CreateEngagementPlanState).ToArray() ?? Enumerable.Empty<ListsAutomations>();
+            return enrollments?.Select(CreateEngagementPlanState).ToArray() ?? Enumerable.Empty<ListsAutomations>();
         }
 
         private ListsAutomations CreateEngagementPlanState(AutomationPlanActivityEnrollmentCacheEntry enrollment)
         {
-            var definition = this.AutomationPlanDefinitionManager.Get(enrollment.AutomationPlanDefinitionId, Context.Language.CultureInfo) ?? this.AutomationPlanDefinitionManager.Get(enrollment.AutomationPlanDefinitionId, CultureInfo.InvariantCulture);
-            var activity = definition?.GetActivity(enrollment.ActivityId);
+            var definition =
+                AutomationPlanDefinitionManager.Get(enrollment.AutomationPlanDefinitionId,
+                    Context.Language.CultureInfo) ??
+                AutomationPlanDefinitionManager.Get(enrollment.AutomationPlanDefinitionId,
+                    CultureInfo.InvariantCulture);
+            //var activity = definition?.GetActivity(enrollment.ActivityId);
+            //var activityName = activity?.Parameters?["Name"] != null ? activity.Parameters["Name"]?.ToString() : string.Empty;
 
-            return new ListsAutomations
-            {
-                EngagementPlanTitle = definition?.Name,
-                Title = activity?.Parameters["Name"]?.ToString() ?? string.Empty,
-                Date = enrollment.ActivityEntryDate
-            };
+            var state = new ListsAutomations();
+            state.EngagementPlanTitle = definition?.Name;
+            state.Title = "";
+            state.Date = enrollment.ActivityEntryDate;
+            return state;
         }
     }
 }

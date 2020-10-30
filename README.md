@@ -20,6 +20,10 @@ Outputs the aggregation of the user's profile.
 **Route**: `/Apis/v1/ClearVisitorSession`
 Clears the user's session is Sitecore. This has the same effect as timing the user's sessions out. This causes the session to be written to Mongo.
 
+####  Tell Sitecore I am not a robot
+**Route**: `/Apis/v1/MakeSessionHuman`
+Tells Sitecore that the current session is real. This works well for UI/UX testing where you are checking xConnect data after the session is closed.
+
 ## JSON
 An example of the output https://gist.github.com/dnstommy/8f8c1d644f0bc4950869375e5141e0b5
 

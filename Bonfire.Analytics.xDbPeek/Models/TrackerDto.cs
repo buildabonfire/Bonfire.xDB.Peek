@@ -24,6 +24,7 @@ namespace Bonfire.Analytics.XdbPeek.Models
         public List<PatternProfile> CurrentProfiles { get; set; }
         public IEnumerable<ExtraBehaviorProfileContext> PastProfiles { get; set; }
         public IEnumerable<ListsAutomations> ListsAutomations { get; set; }
+        public int Classification { get; set; }
     }
 
     public class ExtraBehaviorProfileContext

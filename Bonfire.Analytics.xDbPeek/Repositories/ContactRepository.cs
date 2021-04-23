@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Bonfire.Analytics.XdbPeek.Extensions;
 using Bonfire.Analytics.XdbPeek.Models;
-using Newtonsoft.Json;
 using Sitecore;
 using Sitecore.Analytics;
 using Sitecore.Analytics.Tracking;
 using Sitecore.Data;
-using Sitecore.Data.Items;
 using Sitecore.Marketing.Definitions;
 using Sitecore.Marketing.Definitions.AutomationPlans.Model;
 using Sitecore.XConnect;
 using Sitecore.XConnect.Client;
-using Sitecore.XConnect.Client.Serialization;
 
 namespace Bonfire.Analytics.XdbPeek.Repositories
 {
@@ -97,30 +94,21 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
         public Sitecore.XConnect.Contact GetContact()
         {
             var contactFacets = facetRepository.GetAllContactFacetModels();
-            var facetList = contactFacets.Select(x => x.Name).Where(x => x != "KeyBehaviorCache").Distinct();
+            var facetList = contactFacets.Select(x => x.Name).Where(x => x != "KeyBehaviorCache").Distinct().ToList();
 
             var contactReference = this.contactIdentificationRepository.GetContactReference();
 
 
             using (var client = this.contactIdentificationRepository.CreateContext())
             {
-                var contact = client.Get(contactReference, new ContactExpandOptions(facetList.ToArray()));
+                //var contact = client.Get(contactReference, new ContactExpandOptions(facetList.ToArray()));
 
-                var thing = JsonConvert.SerializeObject(contact);
+                //var test = new ContactExecutionOptions(new ContactExpandOptions(facetList.ToArray()));
+                //test.ReadPreference = ReadPreference.AlwaysLatestData;
 
-                var serializerSettings = new JsonSerializerSettings
-                {
-                    ContractResolver = new XdbJsonContractResolver(client.Model,
-                        serializeFacets: true,
-                        serializeContactInteractions: true),
-                    DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                    DefaultValueHandling = DefaultValueHandling.Ignore,
-                    Formatting = Formatting.None
-                };
-
+                var contact = client.Get(contactReference, new ContactExecutionOptions(new ContactExpandOptions(facetList.ToArray())));
                 return contact;
             }
-
         }
 
 
@@ -128,7 +116,7 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
         {
             if (currentInteraction.CampaignId.HasValue)
             {
-                Item campaign = Context.Database.GetItem(currentInteraction.CampaignId.ToId());
+                var campaign = Context.Database.GetItem(currentInteraction.CampaignId.ToId());
                 if (campaign != null) return campaign.Name;
             }
 
@@ -156,9 +144,9 @@ namespace Bonfire.Analytics.XdbPeek.Repositories
                 //pageName.Substring(0, pageName.IndexOf("/") + 1) +
                 pageName = "..." + pageName.Substring(pageName.LastIndexOf("/", StringComparison.Ordinal));
             }
-            return (pageName.Length < 27) ? $"{pageName} ({(p.Duration / 1000.0).ToString("f2")}s)"
+            return (pageName.Length < 27) ? $"{pageName} ({(p.Duration / 1000.0):f2}s)"
                 :
-                $"{pageName.Substring(0, 26)}... ({(p.Duration / 1000.0).ToString("f2")}s)";
+                $"{pageName.Substring(0, 26)}... ({(p.Duration / 1000.0):f2}s)";
         }
 
         private static ExtraBehaviorProfileContext CreateExtraBehaviorProfileContext(IBehaviorProfileContext profile)

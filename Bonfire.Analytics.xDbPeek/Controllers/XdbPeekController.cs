@@ -7,11 +7,8 @@ namespace Bonfire.Analytics.XdbPeek.Controllers
 {
     public class XdbPeekController : Controller
     {
-        private readonly IContactRepository contactRepository;
-
         public XdbPeekController()
         {
-             this.contactRepository = new ContactRepository(DependencyResolver.Current.GetService<IServiceProvider>());
         }
 
         public ActionResult Details()
